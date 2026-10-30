@@ -1,0 +1,3164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ÔN TẬP GIỮA HỌC KÌ I – KHOA HỌC TỰ NHIÊN 6</title>
+    <style>
+        /* ==========================================================================
+           HỆ THỐNG BIẾN MÀU SẮC & GIAO DIỆN (HOÀN TOÀN OFFLINE - KHÔNG DÙNG CDN)
+           ========================================================================== */
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --primary-light: #e0f2fe;
+            --secondary: #0d9488;
+            --secondary-light: #ccfbf1;
+            --part1-color: #0284c7; /* Xanh dương - Nhiều lựa chọn */
+            --part1-bg: #f0f9ff;
+            --part2-color: #7c3aed; /* Tím - Đúng Sai */
+            --part2-bg: #f5f3ff;
+            --part3-color: #d97706; /* Cam - Trả lời ngắn */
+            --part3-bg: #fffbeb;
+            --part4-color: #059669; /* Xanh lá - Tự luận */
+            --part4-bg: #ecfdf5;
+            --success: #16a34a;
+            --success-bg: #dcfce7;
+            --danger: #dc2626;
+            --danger-bg: #fee2e2;
+            --warning: #ca8a04;
+            --warning-bg: #fef9c3;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-body: #f1f5f9;
+            --bg-card: #ffffff;
+            --border-color: #cbd5e1;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.05);
+            --shadow-md: 0 6px 16px rgba(15, 23, 42, 0.08);
+            --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.12);
+            --font-sans: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-body);
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==========================================================================
+           HEADER & BANNER KHOA HỌC TỰ NHIÊN 6
+           ========================================================================== */
+        .app-header {
+            background: linear-gradient(135deg, #0369a1 0%, #0d9488 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .science-logo {
+            width: 52px;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+        }
+
+        .brand-titles h1 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        .brand-titles p {
+            font-size: 0.85rem;
+            opacity: 0.92;
+            font-weight: 500;
+            letter-spacing: 0.8px;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .student-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.4rem 0.9rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+        }
+
+        /* ==========================================================================
+           CONTAINER CHÍNH & CÁC MÀN HÌNH
+           ========================================================================== */
+        .main-container {
+            max-width: 1140px;
+            width: 100%;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================================================
+           MÀN HÌNH GIỚI THIỆU (WELCOME SCREEN)
+           ========================================================================== */
+        .welcome-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            max-width: 820px;
+            margin: 1rem auto;
+        }
+
+        .welcome-hero {
+            background: linear-gradient(135deg, #0284c7 0%, #0f766e 100%);
+            color: white;
+            padding: 2.2rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-icon-item {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+        }
+
+        .welcome-hero h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+        }
+
+        .welcome-hero .subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.18);
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 999px;
+            margin-top: 0.35rem;
+        }
+
+        .welcome-body {
+            padding: 2rem;
+        }
+
+        .structure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .struct-box {
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            border-left: 4px solid;
+            background: #f8fafc;
+        }
+
+        .struct-box.p1 { border-color: var(--part1-color); background: var(--part1-bg); }
+        .struct-box.p2 { border-color: var(--part2-color); background: var(--part2-bg); }
+        .struct-box.p3 { border-color: var(--part3-color); background: var(--part3-bg); }
+        .struct-box.p4 { border-color: var(--part4-color); background: var(--part4-bg); }
+
+        .struct-box h4 {
+            font-size: 0.92rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-main);
+        }
+
+        .struct-box p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.45rem;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18);
+        }
+
+        .mode-selector {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .mode-info h4 {
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .mode-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .switch-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: var(--primary-dark);
+            user-select: none;
+        }
+
+        .switch-label input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* ==========================================================================
+           NÚT BẤM (BUTTONS)
+           ========================================================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            text-decoration: none;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--text-main);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .btn-block {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* ==========================================================================
+           THANH ĐIỀU HƯỚNG 4 PHẦN & TIẾN TRÌNH
+           ========================================================================== */
+        .top-progress-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 1rem 1.25rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.25rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.6rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .progress-stats {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .progress-bar-outer {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #0284c7, #10b981);
+            border-radius: 999px;
+            transition: width 0.35s ease;
+        }
+
+        .part-tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .part-tab {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.75rem 0.9rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .part-tab .tab-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 0.15rem 0.55rem;
+            border-radius: 999px;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+
+        .part-tab .tab-title {
+            display: block;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 0.2rem;
+        }
+
+        .part-tab .tab-count {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .part-tab.tab-p1.active { border-color: var(--part1-color); background: var(--part1-bg); box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15); }
+        .part-tab.tab-p1 .tab-badge { background: #bae6fd; color: #0369a1; }
+
+        .part-tab.tab-p2.active { border-color: var(--part2-color); background: var(--part2-bg); box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15); }
+        .part-tab.tab-p2 .tab-badge { background: #ddd6fe; color: #5b21b6; }
+
+        .part-tab.tab-p3.active { border-color: var(--part3-color); background: var(--part3-bg); box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15); }
+        .part-tab.tab-p3 .tab-badge { background: #fde68a; color: #92400e; }
+
+        .part-tab.tab-p4.active { border-color: var(--part4-color); background: var(--part4-bg); box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15); }
+        .part-tab.tab-p4 .tab-badge { background: #a7f3d0; color: #065f46; }
+
+        /* ==========================================================================
+           BỐ CỤC LÀM BÀI (CỘT CÂU HỎI & BẢNG DANH SÁCH CÂU)
+           ========================================================================== */
+        .quiz-workspace {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 1.25rem;
+            align-items: start;
+        }
+
+        .question-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .q-card-header {
+            padding: 1.1rem 1.5rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .q-card-header.p1 { background: linear-gradient(135deg, #0284c7, #0369a1); }
+        .q-card-header.p2 { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
+        .q-card-header.p3 { background: linear-gradient(135deg, #d97706, #b45309); }
+        .q-card-header.p4 { background: linear-gradient(135deg, #059669, #047857); }
+
+        .q-meta-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .q-points-badge {
+            background: rgba(255, 255, 255, 0.22);
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .q-card-body {
+            padding: 1.75rem 1.5rem;
+        }
+
+        .q-prompt {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1.4rem;
+            line-height: 1.55;
+            white-space: pre-line;
+        }
+
+        /* Tùy chọn Phần 1 - Nhiều lựa chọn */
+        .mcq-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .mcq-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+            padding: 1rem 1.15rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.18s;
+            background: #ffffff;
+        }
+
+        .mcq-option:hover {
+            border-color: var(--part1-color);
+            background: var(--part1-bg);
+        }
+
+        .mcq-option.selected {
+            border-color: var(--part1-color);
+            background: #e0f2fe;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.15);
+        }
+
+        .opt-letter {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            border: 2px solid #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--text-main);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .mcq-option.selected .opt-letter {
+            background: var(--part1-color);
+            border-color: var(--part1-color);
+            color: white;
+        }
+
+        .opt-text {
+            font-size: 1.02rem;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        /* Tùy chọn Phần 2 - Đúng / Sai */
+        .tf-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .tf-item {
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.15rem;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .tf-statement {
+            font-size: 1.02rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .tf-buttons {
+            display: flex;
+            gap: 0.85rem;
+        }
+
+        .tf-btn {
+            flex: 1;
+            max-width: 160px;
+            padding: 0.55rem 1rem;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--border-color);
+            background: white;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .tf-btn.true-btn.selected {
+            background: #dcfce7;
+            border-color: #16a34a;
+            color: #15803d;
+        }
+
+        .tf-btn.false-btn.selected {
+            background: #fee2e2;
+            border-color: #dc2626;
+            color: #b91c1c;
+        }
+
+        /* Tùy chọn Phần 3 - Trả lời ngắn */
+        .sa-box {
+            background: var(--part3-bg);
+            border: 2px solid #fde68a;
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+        }
+
+        .sa-input-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .sa-input {
+            flex: 1;
+            min-width: 220px;
+            padding: 0.85rem 1.1rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: 2px solid #cbd5e1;
+            border-radius: var(--radius-md);
+        }
+
+        .sa-input:focus {
+            outline: none;
+            border-color: var(--part3-color);
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+        }
+
+        .sa-unit-badge {
+            background: white;
+            border: 2px solid #fcd34d;
+            color: #92400e;
+            padding: 0.75rem 1.1rem;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        /* Tùy chọn Phần 4 - Tự luận */
+        .essay-box textarea {
+            width: 100%;
+            min-height: 170px;
+            padding: 1rem;
+            font-size: 1.02rem;
+            font-family: inherit;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            resize: vertical;
+            line-height: 1.55;
+        }
+
+        .essay-box textarea:focus {
+            outline: none;
+            border-color: var(--part4-color);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.18);
+        }
+
+        /* Hộp kiểm tra nhanh trong Chế độ Luyện tập */
+        .instant-feedback-box {
+            margin-top: 1.25rem;
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            display: none;
+        }
+
+        .instant-feedback-box.visible {
+            display: block;
+        }
+
+        .q-card-footer {
+            padding: 1.1rem 1.5rem;
+            background: #f8fafc;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        /* ==========================================================================
+           BẢNG DANH SÁCH CÂU HỎI BÊN PHẢI (SIDEBAR PALETTE)
+           ========================================================================== */
+        .palette-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            position: sticky;
+            top: 90px;
+        }
+
+        .palette-title {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 0.85rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .palette-section-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin: 0.75rem 0 0.4rem;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.45rem;
+        }
+
+        .pal-btn {
+            height: 38px;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--border-color);
+            background: white;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            color: var(--text-main);
+        }
+
+        .pal-btn.answered {
+            background: #dcfce7;
+            border-color: #16a34a;
+            color: #15803d;
+        }
+
+        .pal-btn.current {
+            outline: 3px solid #0284c7;
+            outline-offset: 1px;
+            font-weight: 800;
+        }
+
+        .palette-legend {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            border: 2px solid var(--border-color);
+            background: white;
+        }
+
+        .legend-dot.done {
+            background: #dcfce7;
+            border-color: #16a34a;
+        }
+
+        /* ==========================================================================
+           MÀN HÌNH KẾT QUẢ & ĐÁP ÁN CHI TIẾT
+           ========================================================================== */
+        .result-summary-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-banner {
+            background: linear-gradient(135deg, #0284c7 0%, #0d9488 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 136px;
+            height: 136px;
+            border-radius: 50%;
+            background: white;
+            color: var(--primary-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem auto;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            border: 5px solid rgba(255, 255, 255, 0.45);
+        }
+
+        .score-circle .big-score {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .score-circle .max-score {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        .encouragement-msg {
+            font-size: 1.15rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.18);
+            display: inline-block;
+            padding: 0.45rem 1.25rem;
+            border-radius: 999px;
+            margin-top: 0.5rem;
+        }
+
+        .result-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .stat-card .stat-val {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-top: 0.25rem;
+        }
+
+        .review-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .review-item {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 1.35rem;
+            border: 2px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .review-item.correct { border-left: 6px solid var(--success); }
+        .review-item.wrong { border-left: 6px solid var(--danger); }
+        .review-item.partial { border-left: 6px solid var(--warning); }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.65rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .status-pill {
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+        }
+
+        .status-pill.correct { background: var(--success-bg); color: var(--success); }
+        .status-pill.wrong { background: var(--danger-bg); color: var(--danger); }
+        .status-pill.partial { background: var(--warning-bg); color: var(--warning); }
+
+        .explanation-box {
+            margin-top: 0.85rem;
+            padding: 0.9rem 1.1rem;
+            background: #f0f9ff;
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--primary);
+            font-size: 0.95rem;
+        }
+
+        /* ==========================================================================
+           MODAL HỘP THOẠI (KHÔNG DÙNG ALERT/CONFIRM CỦA TRÌNH DUYỆT)
+           ========================================================================== */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(3px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 1rem;
+        }
+
+        .modal-backdrop.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: var(--radius-lg);
+            max-width: 540px;
+            width: 100%;
+            padding: 1.75rem;
+            box-shadow: var(--shadow-lg);
+            animation: fadeIn 0.2s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-box.large {
+            max-width: 880px;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* Bảng lịch sử dành cho Giáo viên */
+        .teacher-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .teacher-table th, .teacher-table td {
+            border: 1px solid var(--border-color);
+            padding: 0.65rem 0.8rem;
+            text-align: left;
+        }
+
+        .teacher-table th {
+            background: #f1f5f9;
+            font-weight: 700;
+        }
+
+        /* ==========================================================================
+           CHÂN TRANG & RESPONSIVE
+           ========================================================================== */
+        .app-footer {
+            text-align: center;
+            padding: 1.25rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            background: white;
+            margin-top: 2rem;
+        }
+
+        .teacher-secret-trigger {
+            cursor: pointer;
+            opacity: 0.45;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+            text-decoration: underline;
+        }
+
+        .teacher-secret-trigger:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        @media (max-width: 900px) {
+            .quiz-workspace {
+                grid-template-columns: 1fr;
+            }
+            .palette-card {
+                position: static;
+            }
+            .part-tabs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .part-tabs {
+                grid-template-columns: 1fr;
+            }
+            .brand-titles h1 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER CHÍNH -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand-box">
+                <div class="science-logo" title="Khoa học tự nhiên 6">
+                    <!-- Biểu tượng Nguyên tử & Kính hiển vi SVG nội tuyến -->
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="2"/>
+                        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(30 12 12)"/>
+                        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(150 12 12)"/>
+                        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(90 12 12)"/>
+                    </svg>
+                </div>
+                <div class="brand-titles">
+                    <h1>KHOA HỌC TỰ NHIÊN 6</h1>
+                    <p>HÀNH TRÌNH CHINH PHỤC KIẾN THỨC • ÔN TẬP GIỮA HỌC KÌ I</p>
+                </div>
+            </div>
+
+            <div class="header-controls" id="headerStudentInfo" style="display: none;">
+                <div class="student-badge">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span id="displayStudentName">Học sinh</span> (<span id="displayStudentClass">6A</span>)
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTAINER NỘI DUNG -->
+    <main class="main-container">
+
+        <!-- =================================================================
+             1. MÀN HÌNH GIỚI THIỆU (WELCOME SCREEN)
+             ================================================================= -->
+        <section id="welcomeScreen" class="screen active">
+            <div class="welcome-card">
+                <div class="welcome-hero">
+                    <div class="hero-icons">
+                        <!-- Icon Kính hiển vi -->
+                        <div class="hero-icon-item" title="Kính hiển vi quang học">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/>
+                            </svg>
+                        </div>
+                        <!-- Icon Bình thí nghiệm -->
+                        <div class="hero-icon-item" title="Thí nghiệm thực hành">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/>
+                            </svg>
+                        </div>
+                        <!-- Icon Nhiệt kế & Đo lường -->
+                        <div class="hero-icon-item" title="Các phép đo KHTN">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h2>ÔN TẬP GIỮA HỌC KÌ I – KHOA HỌC TỰ NHIÊN 6</h2>
+                    <div class="subtitle">Môn học: Khoa học tự nhiên • Khối lớp 6</div>
+                </div>
+
+                <div class="welcome-body">
+                    <h3 style="margin-bottom: 0.85rem; font-size: 1.05rem; color: var(--text-main);">📌 Cấu trúc đề ôn tập chuẩn (Thang điểm 10):</h3>
+                    <div class="structure-grid">
+                        <div class="struct-box p1">
+                            <h4>PHẦN 1. NHIỀU LỰA CHỌN</h4>
+                            <p>12 câu hỏi • 3,0 điểm</p>
+                        </div>
+                        <div class="struct-box p2">
+                            <h4>PHẦN 2. ĐÚNG – SAI</h4>
+                            <p>2 câu (8 ý) • 2,0 điểm</p>
+                        </div>
+                        <div class="struct-box p3">
+                            <h4>PHẦN 3. TRẢ LỜI NGẮN</h4>
+                            <p>4 câu hỏi • 2,0 điểm</p>
+                        </div>
+                        <div class="struct-box p4">
+                            <h4>PHẦN 4. TỰ LUẬN</h4>
+                            <p>3 câu hỏi • 3,0 điểm</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="inputStudentName">Họ và tên học sinh <span style="color: var(--danger);">*</span></label>
+                            <input type="text" id="inputStudentName" class="form-control" placeholder="Nhập đầy đủ họ và tên của em..." autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputStudentClass">Lớp <span style="color: var(--danger);">*</span></label>
+                            <input type="text" id="inputStudentClass" class="form-control" placeholder="Ví dụ: 6A1" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="mode-selector">
+                        <div class="mode-info">
+                            <h4>⚙️ Chế độ hiển thị đáp án sau khi làm bài</h4>
+                            <p>Trong chế độ kiểm tra, đáp án chỉ mở sau khi nhấn NỘP BÀI. Có thể bật xem giải thích chi tiết ngay sau khi nộp.</p>
+                        </div>
+                        <label class="switch-label">
+                            <input type="checkbox" id="toggleShowAnswerAfterSubmit" checked>
+                            <span>Hiển thị đáp án & giải thích sau khi nộp bài</span>
+                        </label>
+                    </div>
+
+                    <div id="welcomeErrorMsg" style="display: none; background: var(--danger-bg); color: var(--danger); padding: 0.75rem 1rem; border-radius: var(--radius-sm); font-weight: 700; margin-bottom: 1rem;">
+                        Vui lòng nhập đầy đủ Họ và tên và Lớp trước khi bắt đầu ôn tập!
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-block" onclick="startQuizSession()">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        BẮT ĐẦU ÔN TẬP
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             2. MÀN HÌNH LÀM BÀI (QUIZ SCREEN)
+             ================================================================= -->
+        <section id="quizScreen" class="screen">
+            <!-- Thanh tiến trình chung -->
+            <div class="top-progress-card">
+                <div class="progress-header">
+                    <span class="progress-stats" id="progressText">Tiến độ hoàn thành: 0 / 21 câu (0%)</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">💡 Hệ thống tự động lưu câu trả lời khi chuyển phần</span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progressBarFill"></div>
+                </div>
+            </div>
+
+            <!-- Thanh điều hướng 4 phần -->
+            <div class="part-tabs">
+                <button type="button" class="part-tab tab-p1 active" id="navPart1" onclick="switchPart(1)">
+                    <span class="tab-badge">Phần 1</span>
+                    <span class="tab-title">Nhiều lựa chọn</span>
+                    <span class="tab-count" id="countPart1">Đã làm: 0/12 câu</span>
+                </button>
+                <button type="button" class="part-tab tab-p2" id="navPart2" onclick="switchPart(2)">
+                    <span class="tab-badge">Phần 2</span>
+                    <span class="tab-title">Trắc nghiệm Đúng - Sai</span>
+                    <span class="tab-count" id="countPart2">Đã làm: 0/2 câu</span>
+                </button>
+                <button type="button" class="part-tab tab-p3" id="navPart3" onclick="switchPart(3)">
+                    <span class="tab-badge">Phần 3</span>
+                    <span class="tab-title">Trả lời ngắn</span>
+                    <span class="tab-count" id="countPart3">Đã làm: 0/4 câu</span>
+                </button>
+                <button type="button" class="part-tab tab-p4" id="navPart4" onclick="switchPart(4)">
+                    <span class="tab-badge">Phần 4</span>
+                    <span class="tab-title">Tự luận</span>
+                    <span class="tab-count" id="countPart4">Đã làm: 0/3 câu</span>
+                </button>
+            </div>
+
+            <!-- Không gian câu hỏi + Bảng điều hướng câu -->
+            <div class="quiz-workspace">
+                <!-- Khung hiển thị câu hỏi hiện tại -->
+                <div class="question-card">
+                    <div class="q-card-header p1" id="questionHeader">
+                        <div class="q-meta-title" id="questionHeaderTitle">PHẦN 1 • CÂU 1 / 12</div>
+                        <div class="q-points-badge" id="questionPointsBadge">0,25 điểm</div>
+                    </div>
+
+                    <div class="q-card-body">
+                        <div class="q-prompt" id="questionPromptText">Nội dung câu hỏi...</div>
+                        <div id="questionInteractiveArea"></div>
+                    </div>
+
+                    <div class="q-card-footer">
+                        <button type="button" class="btn btn-outline" id="btnPrevQuestion" onclick="navigateQuestion(-1)">
+                            ← CÂU TRƯỚC
+                        </button>
+                        <span style="font-size: 0.9rem; font-weight: 700; color: var(--text-muted);" id="questionStatusHint">Chưa trả lời</span>
+                        <button type="button" class="btn btn-primary" id="btnNextQuestion" onclick="navigateQuestion(1)">
+                            CÂU TIẾP THEO →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bảng danh sách 21 câu hỏi -->
+                <aside class="palette-card">
+                    <div class="palette-title">
+                        <span>📋 Danh sách câu hỏi</span>
+                        <span id="paletteTotalBadge" style="font-size: 0.82rem; color: var(--primary);">0/21</span>
+                    </div>
+
+                    <div class="palette-legend">
+                        <div class="legend-item"><span class="legend-dot done"></span> Đã làm</div>
+                        <div class="legend-item"><span class="legend-dot"></span> Chưa làm</div>
+                    </div>
+
+                    <div id="paletteContainer"></div>
+
+                    <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1.1rem 0;">
+
+                    <button type="button" class="btn btn-success btn-block" onclick="openSubmitConfirmation()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        NỘP BÀI & CHẤM ĐIỂM
+                    </button>
+                </aside>
+            </div>
+        </section>
+
+        <!-- =================================================================
+             3. MÀN HÌNH KẾT QUẢ (RESULT SCREEN)
+             ================================================================= -->
+        <section id="resultScreen" class="screen">
+            <div class="result-summary-card">
+                <div class="result-banner">
+                    <h2 style="font-size: 1.6rem; font-weight: 800;">KẾT QUẢ BÀI ÔN TẬP GIỮA HỌC KÌ I</h2>
+                    <p id="resultStudentInfo" style="opacity: 0.95; margin-top: 0.25rem; font-weight: 600;"></p>
+
+                    <div class="score-circle">
+                        <span class="big-score" id="finalTotalScore">0,00</span>
+                        <span class="max-score">Thang điểm 10</span>
+                    </div>
+
+                    <div class="encouragement-msg" id="encouragementText">Chúc mừng em đã hoàn thành bài ôn tập!</div>
+                </div>
+
+                <div class="result-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Phần 1. Nhiều lựa chọn (3,0đ)</div>
+                        <div class="stat-val" style="color: var(--part1-color);" id="scorePart1">0,00 đ</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Phần 2. Đúng – Sai (2,0đ)</div>
+                        <div class="stat-val" style="color: var(--part2-color);" id="scorePart2">0,00 đ</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Phần 3. Trả lời ngắn (2,0đ)</div>
+                        <div class="stat-val" style="color: var(--part3-color);" id="scorePart3">0,00 đ</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Phần 4. Tự luận (3,0đ)</div>
+                        <div class="stat-val" style="color: var(--part4-color);" id="scorePart4">0,00 đ</div>
+                    </div>
+                </div>
+
+                <div style="padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <div style="display: flex; gap: 1.25rem; flex-wrap: wrap; font-weight: 700; font-size: 0.95rem;">
+                        <span style="color: var(--success);">✔ Số câu đúng/đạt tối đa: <strong id="statCorrectCount">0</strong></span>
+                        <span style="color: var(--warning);">◐ Đúng một phần: <strong id="statPartialCount">0</strong></span>
+                        <span style="color: var(--danger);">✘ Số câu sai: <strong id="statWrongCount">0</strong></span>
+                        <span style="color: var(--text-muted);">○ Chưa trả lời: <strong id="statUnansweredCount">0</strong></span>
+                    </div>
+
+                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-outline" id="btnToggleReview" onclick="toggleReviewVisibility()">
+                            👁️ Ẩn/Hiện Đáp Án Chi Tiết
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="restartNewQuiz()">
+                            🔄 LÀM LẠI BÀI (ĐỀ MỚI)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danh sách đáp án và giải thích từng câu -->
+            <div id="detailedReviewWrapper">
+                <h3 style="margin-bottom: 1rem; font-size: 1.2rem;">📖 ĐÁP ÁN CHI TIẾT & HƯỚNG DẪN GIẢI</h3>
+                <div class="review-container" id="reviewListContainer"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL XÁC NHẬN NỘP BÀI -->
+    <div class="modal-backdrop" id="submitModal">
+        <div class="modal-box">
+            <div class="modal-title">📝 Xác nhận nộp bài ôn tập</div>
+            <p id="submitModalMessage" style="font-size: 1rem; color: var(--text-main); margin-bottom: 0.75rem;"></p>
+            <div id="submitUnansweredWarning" style="display: none; background: var(--warning-bg); color: #854d0e; padding: 0.85rem 1rem; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.92rem;"></div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-outline" onclick="closeSubmitModal()">Quay lại làm tiếp</button>
+                <button type="button" class="btn btn-success" onclick="confirmAndGradeQuiz()">Xác nhận Nộp bài</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DÀNH CHO GIÁO VIÊN KIỂM TRA LỊCH SỬ THAM GIA (ẨN VỚI HỌC SINH) -->
+    <div class="modal-backdrop" id="teacherModal">
+        <div class="modal-box large">
+            <div class="modal-title">👨‍🏫 Bảng Quản Lý Dành Cho Giáo Viên</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                Danh sách học sinh đã tham gia làm bài ôn tập trên trình duyệt/máy tính này (Học sinh không nhìn thấy số lượng người tham gia ngoài màn hình chính).
+            </p>
+            <div id="teacherPasswordGate">
+                <label style="font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 0.4rem;">Nhập mã xác thực giáo viên (Mặc định: <strong>khtn6</strong>):</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="password" id="teacherPassInput" class="form-control" placeholder="Nhập mã khtn6..." style="max-width: 240px;">
+                    <button type="button" class="btn btn-primary" onclick="unlockTeacherPanel()">Mở dữ liệu</button>
+                </div>
+                <p id="teacherPassError" style="color: var(--danger); font-size: 0.85rem; margin-top: 0.4rem; display: none;">Mã xác thực chưa đúng!</p>
+            </div>
+
+            <div id="teacherDataContent" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <strong>Nhật ký học sinh đã làm bài:</strong>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button type="button" class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="exportTeacherCSV()">⬇ Xuất file CSV</button>
+                        <button type="button" class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; color: var(--danger);" onclick="clearTeacherHistory()">🗑 Xóa lịch sử</button>
+                    </div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="teacher-table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Họ và tên học sinh</th>
+                                <th>Lớp</th>
+                                <th>Điểm P1</th>
+                                <th>Điểm P2</th>
+                                <th>Điểm P3</th>
+                                <th>Điểm P4</th>
+                                <th>Tổng điểm</th>
+                                <th>Thời gian nộp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacherHistoryTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-outline" onclick="closeTeacherModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+        <span>Học liệu số tương tác môn Khoa học tự nhiên 6 • Ôn tập Giữa Học kì I (Hoạt động 100% Offline)</span>
+        <span class="teacher-secret-trigger" onclick="openTeacherModal()" title="Dành riêng cho Giáo viên kiểm tra">• [Dành cho Giáo viên]</span>
+    </footer>
+
+    <!-- =====================================================================
+         MÃ NGUỒN JAVASCRIPT: NGÂN HÀNG 98 CÂU HỎI GỐC & LOGIC CHẤM ĐIỂM
+         ===================================================================== -->
+    <script>
+        /* =========================================================================
+           1. NGÂN HÀNG CÂU HỎI CHÍNH XÁC 100% TỪ FILE ĐÍNH KÈM (98 CÂU)
+           (Không hiển thị số thứ tự câu gốc khi học sinh làm bài)
+           ========================================================================= */
+
+        // PHẦN 1: 50 CÂU TRẮC NGHIỆM NHIỀU LỰA CHỌN
+        const BANK_PART1 = [
+            {
+                q: "Khi học tập và làm thí nghiệm trong phòng thực hành Khoa học tự nhiên, trang phục của học sinh cần đảm bảo quy định nào sau đây?",
+                options: [
+                    "Mặc trang phục tự do, thoải mái, đi dép lê cho thoáng mát.",
+                    "Mặc trang phục gọn gàng, nữ buộc tóc cao, đeo găng tay, khẩu trang, kính bảo vệ mắt khi cần thiết.",
+                    "Không cần mặc gọn gàng, có thể buông tóc dài thoải mái.",
+                    "Mặc áo dài truyền thống để tạo sự trang nghiêm."
+                ],
+                ans: 1,
+                exp: "Trong phòng thực hành, học sinh cần mặc trang phục gọn gàng, nữ buộc tóc cao, đeo găng tay, khẩu trang, kính bảo vệ mắt khi cần thiết để đảm bảo an toàn."
+            },
+            {
+                q: "Theo quy định an toàn trong phòng thực hành, khi nào học sinh được phép tiến hành thí nghiệm?",
+                options: [
+                    "Khi thích làm thí nghiệm nào thì làm.",
+                    "Khi có sự cho phép hoặc hướng dẫn của giáo viên.",
+                    "Khi tự mình chuẩn bị xong dụng cụ ở nhà.",
+                    "Khi các bạn trong nhóm đồng ý tiến hành mà không cần thầy cô."
+                ],
+                ans: 1,
+                exp: "Chỉ tiến hành thí nghiệm khi có sự hướng dẫn và cho phép của giáo viên để tránh các tai nạn đáng tiếc."
+            },
+            {
+                q: "Hành động nào sau đây vi phạm quy định an toàn khi làm việc với hóa chất trong phòng thực hành?",
+                options: [
+                    "Đọc kĩ nhãn ghi trên mỗi lọ chứa hóa chất.",
+                    "Cẩn thận khi làm thí nghiệm với các hóa chất có tính ăn mòn.",
+                    "Tự ý nếm hoặc ngửi hóa chất để kiểm tra.",
+                    "Rửa tay kĩ bằng xà phòng sau khi xử lí hóa chất."
+                ],
+                ans: 2,
+                exp: "Tuyệt đối không tự ý nếm hoặc ngửi trực tiếp hóa chất vì nhiều hóa chất có tính độc hại hoặc ăn mòn."
+            },
+            {
+                q: "Sau khi hoàn thành xong buổi thí nghiệm, việc làm nào sau đây thể hiện đúng quy định an toàn và vệ sinh?",
+                options: [
+                    "Bỏ ngay chất thải thí nghiệm xuống sàn nhà cho nhanh.",
+                    "Để lại toàn bộ dụng cụ bẩn trên bàn cho tiết sau.",
+                    "Thu gom chất thải để đúng nơi quy định, lau dọn sạch sẽ chỗ làm việc và rửa sạch tay bằng xà phòng.",
+                    "Vứt các dụng cụ thủy tinh vỡ vào thùng rác sinh hoạt chung của lớp."
+                ],
+                ans: 2,
+                exp: "Sau thí nghiệm cần phân loại chất thải đúng nơi quy định, dọn sạch chỗ làm việc và rửa tay sạch bằng xà phòng."
+            },
+            {
+                q: "Kính lúp là dụng cụ được sử dụng chủ yếu để làm gì?",
+                options: [
+                    "Quan sát các vật có kích thước rất lớn ở khoảng cách xa (như các vì sao).",
+                    "Quan sát các vật có kích thước rất nhỏ mà mắt thường khó nhìn rõ chi tiết.",
+                    "Đo đạc chính xác khối lượng của các chất hóa học rắn.",
+                    "Đo nhiệt độ sôi của nước trong các thí nghiệm nhiệt học."
+                ],
+                ans: 1,
+                exp: "Kính lúp giúp phóng to ảnh của những vật có kích thước nhỏ để mắt nhìn rõ chi tiết hơn."
+            },
+            {
+                q: "Khi bắt đầu sử dụng kính lúp cầm tay để quan sát một vật mẫu, bước đầu tiên chúng ta phải thực hiện như thế nào?",
+                options: [
+                    "Đặt kính lúp thật xa vật mẫu, sau đó đưa dần lại gần.",
+                    "Đặt kính lúp gần sát vật mẫu, mắt nhìn vào mặt kính.",
+                    "Cầm kính lúp đưa lên cao ngang tầm mắt rồi nhìn qua kính.",
+                    "Úp trực tiếp mặt kính lúp lên bàn học rồi mới đặt vật mẫu lên trên."
+                ],
+                ans: 1,
+                exp: "Khi dùng kính lúp cầm tay: Đặt kính lúp gần sát vật mẫu, mắt nhìn vào mặt kính, sau đó từ từ dịch kính ra xa tới khi nhìn rõ vật."
+            },
+            {
+                q: "Thông thường, các loại kính lúp thông dụng trong phòng thực hành có khả năng phóng to ảnh của vật được quan sát trong khoảng nào?",
+                options: [
+                    "Từ 1 đến 2 lần.",
+                    "Từ 3 đến 20 lần.",
+                    "Từ 50 đến 100 lần.",
+                    "Từ 200 đến 500 lần."
+                ],
+                ans: 1,
+                exp: "Kính lúp thông dụng trong phòng thực hành có độ bội giác (khả năng phóng to) từ 3 đến 20 lần."
+            },
+            {
+                q: "Kính hiển vi quang học là dụng cụ có khả năng phóng to ảnh của vật được quan sát trong khoảng nào?",
+                options: [
+                    "Từ 3 lần đến 20 lần.",
+                    "Từ 40 lần đến 3000 lần.",
+                    "Từ 5000 lần đến 10000 lần.",
+                    "Từ 1 lần đến 10 lần."
+                ],
+                ans: 1,
+                exp: "Kính hiển vi quang học có độ phóng đại lớn hơn nhiều so với kính lúp, từ 40 lần đến 3000 lần."
+            },
+            {
+                q: "Bộ phận nào của kính hiển vi quang học là phần kính dùng để mắt vào quan sát?",
+                options: [
+                    "Vật kính.",
+                    "Thị kính.",
+                    "Bàn kính.",
+                    "Đèn chiếu sáng."
+                ],
+                ans: 1,
+                exp: "Thị kính ('thị' là nhìn) là bộ phận đặt mắt vào để quan sát mẫu vật."
+            },
+            {
+                q: "Để nhìn thấy mẫu vật thật rõ nét sau khi đã đưa vật kính lên từ từ bằng ốc to, ta thực hiện thao tác nào tiếp theo?",
+                options: [
+                    "Vặn ốc to theo chiều ngược lại thật nhanh.",
+                    "Vặn ốc nhỏ thật chậm.",
+                    "Dịch chuyển đĩa quay gắn các vật kính liên tục.",
+                    "Dùng tay di chuyển tiêu bản ra ngoài."
+                ],
+                ans: 1,
+                exp: "Ốc nhỏ (ốc vi cấp) dùng để điều chỉnh tinh giúp nhìn thấy ảnh của mẫu vật thật rõ nét."
+            },
+            {
+                q: "Khi di chuyển kính hiển vi quang học sang vị trí khác, cách cầm nắm nào sau đây là đúng quy định an toàn và bảo quản?",
+                options: [
+                    "Cầm một tay vào phần thị kính cho chắc chắn.",
+                    "Cầm vào bóng đèn chiếu sáng của kính.",
+                    "Một tay cầm vào thân kính, tay kia đỡ chân đế của kính.",
+                    "Cầm vào đĩa quay gắn vật kính."
+                ],
+                ans: 2,
+                exp: "Khi di chuyển kính hiển vi phải dùng một tay cầm chắc thân kính, tay kia đỡ nhẹ vào chân đế của kính."
+            },
+            {
+                q: "Trong Hệ đơn vị đo lường hợp pháp của nước ta, đơn vị cơ bản dùng để đo khối lượng là gì?",
+                options: [
+                    "Gam (g).",
+                    "Kilôgam (kg).",
+                    "Miligam (mg).",
+                    "Tấn (t)."
+                ],
+                ans: 1,
+                exp: "Đơn vị đo khối lượng cơ bản trong hệ SI và hệ đo lường hợp pháp của nước ta là kilôgam (kg)."
+            },
+            {
+                q: "Dụng cụ nào sau đây không phải là dụng cụ thường dùng để đo khối lượng?",
+                options: [
+                    "Cân đồng hồ.",
+                    "Cân Rô-béc-van.",
+                    "Nhiệt kế thủy ngân.",
+                    "Cân điện tử."
+                ],
+                ans: 2,
+                exp: "Nhiệt kế thủy ngân là dụng cụ dùng để đo nhiệt độ, không dùng đo khối lượng."
+            },
+            {
+                q: "Khi sử dụng cân đồng hồ để đo khối lượng của một vật, bước đầu tiên cần phải thực hiện là gì?",
+                options: [
+                    "Đặt vật cần cân lên đĩa cân ngay lập tức.",
+                    "Ước lượng khối lượng của vật để chọn cân có GHĐ và ĐCNN thích hợp.",
+                    "Đọc và ghi kết quả đo ngay khi chưa đặt vật.",
+                    "Vặn ốc điều chỉnh để kim cân chỉ lệch số 5."
+                ],
+                ans: 1,
+                exp: "Bước 1 khi đo khối lượng là ước lượng khối lượng vật cần đo để chọn cân có GHĐ và ĐCNN phù hợp."
+            },
+            {
+                q: "Sau khi ước lượng khối lượng và trước khi đặt vật cần cân lên đĩa cân đồng hồ, ta cần thực hiện thao tác nào với kim cân?",
+                options: [
+                    "Dùng tay vặn cho kim cân quay một vòng.",
+                    "Vặn ốc điều chỉnh để kim cân chỉ đúng vạch số 0.",
+                    "Bẻ nhẹ kim cân về vị trí giữa.",
+                    "Tháo rời mặt kính của đồng hồ ra ngoài."
+                ],
+                ans: 1,
+                exp: "Cần hiệu chỉnh cân (vặn ốc điều chỉnh) để kim cân chỉ đúng vạch số 0 trước khi đặt vật lên cân."
+            },
+            {
+                q: "Khi đọc kết quả đo khối lượng bằng cân đồng hồ, tư thế đặt mắt của người quan sát như thế nào là đúng cách?",
+                options: [
+                    "Mắt nhìn nghiêng sang bên trái hoặc bên phải so với mặt đồng hồ.",
+                    "Mắt nhìn từ dưới lên cao.",
+                    "Mắt nhìn vuông góc với vạch chia trên mặt cân ở đầu kim cân.",
+                    "Nhắm mắt lại và ước lượng bằng cảm giác."
+                ],
+                ans: 2,
+                exp: "Đặt mắt nhìn theo hướng vuông góc với mặt cân tại đầu kim cân để đọc kết quả chính xác."
+            },
+            {
+                q: "Trong Hệ đơn vị đo lường hợp pháp của nước ta, đơn vị cơ bản dùng để đo thời gian là gì?",
+                options: [
+                    "Giờ (h).",
+                    "Phút (min).",
+                    "Giây (s).",
+                    "Ngày."
+                ],
+                ans: 2,
+                exp: "Đơn vị đo thời gian cơ bản trong hệ đo lường hợp pháp của nước ta là giây (s)."
+            },
+            {
+                q: "Dụng cụ chính dùng để đo thời gian là dụng cụ nào sau đây?",
+                options: [
+                    "Nhiệt kế.",
+                    "Đồng hồ.",
+                    "Cân điện tử.",
+                    "Thước cuộn."
+                ],
+                ans: 1,
+                exp: "Đồng hồ là dụng cụ dùng để đo thời gian."
+            },
+            {
+                q: "Rơm rạ sau vụ gặt, bã mía sau khi ép đường thường bị coi là rác. Tuy nhiên theo mô hình kinh tế tuần hoàn, chúng được xem là gì?",
+                options: [
+                    "Chất thải độc hại.",
+                    "Nguyên liệu sinh khối để làm thức ăn gia súc, ủ phân hữu cơ hoặc làm chất đốt phát điện.",
+                    "Nguyên liệu làm xi măng.",
+                    "Vật liệu làm kính."
+                ],
+                ans: 1,
+                exp: "Trong kinh tế tuần hoàn, phụ phẩm nông nghiệp (rơm rạ, bã mía) là nguồn nguyên liệu sinh khối hữu ích."
+            },
+            {
+                q: "Loại đồng hồ nào sau đây thường được sử dụng để đo thời gian trong các thí nghiệm vật lý và các sự kiện thể thao cần độ chính xác cao?",
+                options: [
+                    "Đồng hồ mặt trời.",
+                    "Đồng hồ cát.",
+                    "Đồng hồ bấm giây.",
+                    "Đồng hồ quả lắc truyền thống."
+                ],
+                ans: 2,
+                exp: "Đồng hồ bấm giây có ĐCNN nhỏ, giúp đo các khoảng thời gian ngắn trong thể thao và thí nghiệm rất chính xác."
+            },
+            {
+                q: "Đất nước ta có vùng nguyên liệu tre nứa rất dồi dào. Gần đây, người ta dùng tre nứa để sản xuất ống hút, chén, dĩa ép. Việc này mang lại lợi ích lớn nhất là gì?",
+                options: [
+                    "Làm tre nứa nhanh tuyệt chủng.",
+                    "Tận dụng nguyên liệu sinh học có khả năng tái tạo, dễ phân hủy, thay thế cho đồ nhựa dùng một lần gây ô nhiễm.",
+                    "Tre nứa rẻ hơn nước.",
+                    "Đồ bằng tre nứa ăn ngon hơn."
+                ],
+                ans: 1,
+                exp: "Sử dụng tre nứa giúp tận dụng nguyên liệu tái tạo, thân thiện môi trường và giảm rác thải nhựa."
+            },
+            {
+                q: "Khi sử dụng đồng hồ bấm giây để chuẩn bị đo thời gian của một hoạt động, thao tác đầu tiên cần làm để đưa số chỉ của đồng hồ về vị trí ban đầu là gì?",
+                options: [
+                    "Nhấn nút Start (bắt đầu).",
+                    "Nhấn nút Stop (dừng).",
+                    "Nhấn nút Reset (thiết lập/đưa về số 0).",
+                    "Tháo pin của đồng hồ ra."
+                ],
+                ans: 2,
+                exp: "Nhấn nút Reset để đưa kim hoặc số hiển thị của đồng hồ bấm giây về đúng vạch số 0 trước khi đo."
+            },
+            {
+                q: "Đơn vị đo nhiệt độ thường dùng ở nước ta trong thang nhiệt độ Xen-xi-út là gì?",
+                options: [
+                    "Độ F (°F)",
+                    "Độ C (°C)",
+                    "Kenvin (K)",
+                    "Giây (s)."
+                ],
+                ans: 1,
+                exp: "Trong thang nhiệt độ Celsius (Xen-xi-út), đơn vị đo nhiệt độ là độ C (°C)."
+            },
+            {
+                q: "Nhiệt độ là số đo mức độ nào của một vật?",
+                options: [
+                    "Lượng chất của vật.",
+                    "Thể tích của vật.",
+                    "Độ \"nóng\", \"lạnh\" của một vật.",
+                    "Kích thước lớn, nhỏ của vật."
+                ],
+                ans: 2,
+                exp: "Nhiệt độ là số đo độ 'nóng', 'lạnh' của một vật."
+            },
+            {
+                q: "Dụng cụ dùng để đo nhiệt độ được gọi chung là gì?",
+                options: [
+                    "Cân điện tử.",
+                    "Nhiệt kế.",
+                    "Đồng hồ bấm giây.",
+                    "Thước cuộn."
+                ],
+                ans: 1,
+                exp: "Nhiệt kế là dụng cụ dùng để đo nhiệt độ."
+            },
+            {
+                q: "Hiện tượng nào của chất lỏng được dùng làm cơ sở để chế tạo các dụng cụ đo nhiệt độ thông thường?",
+                options: [
+                    "Sự bay hơi của chất lỏng.",
+                    "Sự đông đặc của chất lỏng.",
+                    "Sự nở vì nhiệt của chất lỏng.",
+                    "Sự nóng chảy của chất lỏng."
+                ],
+                ans: 2,
+                exp: "Các nhiệt kế chất lỏng (thủy ngân, rượu) hoạt động dựa trên hiện tượng dãn nở vì nhiệt của chất lỏng."
+            },
+            {
+                q: "Theo thang nhiệt độ Xen-xi-út do nhà khoa học Xen-xi-út đề nghị năm 1742, nhiệt độ của nước đá đang tan được quy ước là bao nhiêu?",
+                options: [
+                    "0 °C",
+                    "37 °C",
+                    "100 °C",
+                    "32 °F"
+                ],
+                ans: 0,
+                exp: "Trong thang nhiệt độ Celsius, nhiệt độ của nước đá đang tan được quy ước là 0 °C."
+            },
+            {
+                q: "Trong thang nhiệt độ Celsius, nhiệt độ của hơi nước đang sôi (ở áp suất tiêu chuẩn) được quy ước là bao nhiêu?",
+                options: [
+                    "0 °C",
+                    "37 °C",
+                    "50 °C",
+                    "100 °C"
+                ],
+                ans: 3,
+                exp: "Trong thang nhiệt độ Celsius, nhiệt độ của hơi nước đang sôi được quy ước là 100 °C."
+            },
+            {
+                q: "Khoảng cách giữa nhiệt độ của nước đá đang tan và nhiệt độ của hơi nước đang sôi trong thang nhiệt độ Celsius được chia thành bao nhiêu phần bằng nhau?",
+                options: [
+                    "50 phần.",
+                    "100 phần.",
+                    "180 phần.",
+                    "212 phần."
+                ],
+                ans: 1,
+                exp: "Khoảng cách từ 0 °C đến 100 °C được chia thành 100 phần bằng nhau, mỗi phần ứng với 1 °C."
+            },
+            {
+                q: "Trong thang nhiệt độ Celsius, những nhiệt độ thấp hơn 0 °C được gọi là gì?",
+                options: [
+                    "Nhiệt độ cao.",
+                    "Nhiệt độ âm.",
+                    "Nhiệt độ sôi.",
+                    "Nhiệt độ tuyệt đối."
+                ],
+                ans: 1,
+                exp: "Những nhiệt độ thấp hơn 0 °C trong thang Celsius được gọi là nhiệt độ âm (có dấu trừ phía trước)."
+            },
+            {
+                q: "Vì sao chúng ta cần phải khai thác và sử dụng các nguồn nguyên liệu tự nhiên (như quặng, đá vôi...) một cách hợp lí?",
+                options: [
+                    "Vì chúng là nguồn tài nguyên hữu hạn và ngày một cạn đi.",
+                    "Vì chúng rất khó tìm thấy ở Việt Nam.",
+                    "Vì chính quyền không cho phép khai thác nhiều.",
+                    "Vì các nguyên liệu này không có giá trị kinh tế."
+                ],
+                ans: 0,
+                exp: "Các nguồn nguyên liệu khoáng sản tự nhiên là tài nguyên hữu hạn, không thể tự phục hồi nhanh chóng."
+            },
+            {
+                q: "Bên cạnh việc khai thác nguyên liệu hiệu quả, khi tiến hành khai thác quặng, điều gì đồng thời phải được chú trọng thực hiện?",
+                options: [
+                    "Tăng tốc độ khai thác gấp đôi để thu lợi nhuận.",
+                    "Gìn giữ và bảo vệ môi trường.",
+                    "Đốt cháy toàn bộ lượng đất đá thừa tại chỗ.",
+                    "Ngừng hoàn toàn việc xử lí tạp chất."
+                ],
+                ans: 1,
+                exp: "Khai thác nguyên liệu phải luôn đi đôi với việc gìn giữ và bảo vệ môi trường."
+            },
+            {
+                q: "Trước và sau khi sử dụng kính hiển vi quang học, bộ phận thị kính và vật kính cần được lau chùi bằng vật dụng gì?",
+                options: [
+                    "Giấy chuyên dụng.",
+                    "Giấy báo hoặc khăn giấy thông thường.",
+                    "Vải thô ráp hoặc quần áo đang mặc.",
+                    "Khăn ướt bình thường."
+                ],
+                ans: 0,
+                exp: "Thị kính và vật kính là các thấu kính quang học chính xác, cần được lau bằng giấy lau kính chuyên dụng để tránh trầy xước."
+            },
+            {
+                q: "Khi đặt kính hiển vi quang học để tiến hành quan sát, ta phải đặt kính trên bề mặt như thế nào?",
+                options: [
+                    "Bề mặt nghiêng hoặc gồ ghề.",
+                    "Bề mặt phẳng.",
+                    "Mép bàn cao sát mép tường.",
+                    "Bề mặt mềm (như nệm mút hoặc sách vở chồng chéo)."
+                ],
+                ans: 1,
+                exp: "Phải đặt kính hiển vi trên bề mặt bàn phẳng, chắc chắn và vừa tầm quan sát."
+            },
+            {
+                q: "Hành động nào sau đây là giải pháp sử dụng nguyên liệu bền vững?",
+                options: [
+                    "Tăng cường khai thác quặng càng nhanh càng tốt.",
+                    "Thu gom, tái chế các phế liệu kim loại, giấy, nhựa.",
+                    "Chặt phá rừng nguyên sinh để lấy gỗ làm giấy.",
+                    "Đổ rác thải công nghiệp trực tiếp ra sông."
+                ],
+                ans: 1,
+                exp: "Thu gom, tái chế phế liệu giúp tiết kiệm tài nguyên thiên nhiên và bảo vệ môi trường bền vững."
+            },
+            {
+                q: "Hành động nào sau đây thể hiện đúng tinh thần bảo vệ môi trường và sử dụng hiệu quả nguyên liệu tự nhiên?",
+                options: [
+                    "Khai thác cạn kiệt để bán thu lợi nhuận trước mắt.",
+                    "Khai thác hợp lí đi đôi với gìn giữ và bảo vệ môi trường.",
+                    "Xả trực tiếp chất thải khai thác ra các dòng sông.",
+                    "Đốt bỏ toàn bộ nguyên liệu thô trước khi đưa vào nhà máy."
+                ],
+                ans: 1,
+                exp: "Cần khai thác hợp lí theo quy hoạch đi đôi với bảo vệ môi trường sinh thái."
+            },
+            {
+                q: "Tại sao lương thực và thực phẩm cần phải được bảo quản thích hợp trước khi sử dụng?",
+                options: [
+                    "Vì chúng rất khó tìm mua ở chợ và siêu thị.",
+                    "Vì chúng dễ bị hư hỏng (nhất là trong môi trường nóng, ẩm) và sinh ra các chất độc hại cho sức khỏe.",
+                    "Để làm tăng khối lượng và giữ nguyên hương vị ban đầu mãi mãi.",
+                    "Để tiết kiệm chi phí khi mua sắm thức ăn hằng ngày."
+                ],
+                ans: 1,
+                exp: "Lương thực, thực phẩm rất dễ bị vi sinh vật, nấm mốc phân hủy sinh ra độc tố trong môi trường nóng ẩm."
+            },
+            {
+                q: "Hiện tượng thịt, cá, rau bị ôi thiu (nhiễm khuẩn) do để ở môi trường bên ngoài có thể gây ra tác hại gì cho cơ thể người?",
+                options: [
+                    "Gây ngộ độc thực phẩm cho cơ thể.",
+                    "Cung cấp thêm nhiều năng lượng và vitamin.",
+                    "Giúp hệ tiêu hóa hoạt động tốt hơn.",
+                    "Làm cho xương phát triển chắc khỏe."
+                ],
+                ans: 0,
+                exp: "Sử dụng thực phẩm ôi thiu bị nhiễm khuẩn sẽ dẫn đến nguy cơ ngộ độc thực phẩm."
+            },
+            {
+                q: "Gạo hoặc lạc khi bị mốc có thể sinh ra chất cực độc nào dưới đây?",
+                options: [
+                    "Chất làm tăng thị lực.",
+                    "Chất cực độc gây ung thư.",
+                    "Chất làm tăng cường hệ miễn dịch.",
+                    "Chất giúp phát triển cơ bắp."
+                ],
+                ans: 1,
+                exp: "Nấm mốc trên gạo, lạc (đậu phộng) sinh ra độc tố Aflatoxin là chất cực độc có khả năng gây ung thư gan."
+            },
+            {
+                q: "Môi trường nào tạo điều kiện thuận lợi nhất cho lương thực, thực phẩm dễ bị hư hỏng và sinh ra chất độc?",
+                options: [
+                    "Môi trường lạnh giá, khô ráo trong tủ đông.",
+                    "Môi trường nóng, ẩm.",
+                    "Môi trường chân không tuyệt đối.",
+                    "Môi trường trong bình kín có khí trơ."
+                ],
+                ans: 1,
+                exp: "Môi trường nóng, ẩm tạo điều kiện thuận lợi cho vi khuẩn và nấm mốc sinh sôi làm hỏng thực phẩm."
+            },
+            {
+                q: "Để cơ thể hấp thụ tốt vitamin A (loại vitamin tan trong chất béo) có trong các loại củ quả như cà rốt, cà chua, bữa ăn hằng ngày cần phải có thêm thành phần nào?",
+                options: [
+                    "Muối ăn và đường trắng.",
+                    "Dầu, mỡ.",
+                    "Nước lọc đun sôi để nguội.",
+                    "Rất nhiều chất xơ từ rau lá."
+                ],
+                ans: 1,
+                exp: "Vitamin A là vitamin tan trong chất béo (dầu, mỡ), nên bữa ăn cần có dầu, mỡ để cơ thể hấp thụ tốt vitamin A."
+            },
+            {
+                q: "Để có một cơ thể khỏe mạnh, chúng ta cần lưu ý điều gì khi lựa chọn thức ăn và đồ uống hằng ngày?",
+                options: [
+                    "Chỉ ăn những món ăn mình yêu thích với số lượng thật nhiều.",
+                    "Lựa chọn thức ăn, đồ uống an toàn, đủ chất dinh dưỡng.",
+                    "Hạn chế tối đa việc sử dụng rau xanh và trái cây tươi.",
+                    "Ăn thật nhiều đồ chiên rán chứa mỡ động vật để chống lạnh quanh năm."
+                ],
+                ans: 1,
+                exp: "Khẩu phần ăn hợp lí cần đảm bảo vệ sinh an toàn thực phẩm và cân đối đầy đủ các nhóm chất dinh dưỡng."
+            },
+            {
+                q: "Vật thể hữu sinh (vật sống) có đặc điểm nào sau đây?",
+                options: [
+                    "Không cần nước",
+                    "Có các đặc điểm sống như trao đổi chất, sinh trưởng và phát triển",
+                    "Không lớn lên theo thời gian",
+                    "Chỉ có ở trong phòng thí nghiệm"
+                ],
+                ans: 1,
+                exp: "Vật sống (vật hữu sinh) có các dấu hiệu đặc trưng của sự sống như trao đổi chất, lớn lên, sinh sản, cảm ứng."
+            },
+            {
+                q: "Việc tái chế sắt vụn, vỏ lon nhôm cũ sẽ giúp giảm thiểu việc khai thác loại nguyên liệu nào trong tự nhiên?",
+                options: [
+                    "Gỗ",
+                    "Đá vôi",
+                    "Quặng kim loại",
+                    "Cát."
+                ],
+                ans: 2,
+                exp: "Sắt và nhôm được sản xuất từ quặng kim loại, do đó tái chế sắt vụn và vỏ lon nhôm giúp giảm khai thác quặng kim loại."
+            },
+            {
+                q: "Phát biểu nào sau đây đúng khi nói về chất?",
+                options: [
+                    "Vật thể do chất tạo nên",
+                    "Chất do vật thể tạo nên",
+                    "Vật thể và chất là một, không phân biệt",
+                    "Chất chỉ có ở thể khí"
+                ],
+                ans: 0,
+                exp: "Mọi vật thể xung quanh chúng ta đều do một hay nhiều chất tạo nên."
+            },
+            {
+                q: "Tính chất nào sau đây là tính chất vật lí của chất?",
+                options: [
+                    "Khả năng bị cháy trong không khí",
+                    "Tính han gỉ khi để ngoài không khí ẩm",
+                    "Tính tan trong nước, màu sắc, trạng thái",
+                    "Khả năng biến đổi thành chất khác"
+                ],
+                ans: 2,
+                exp: "Màu sắc, mùi, vị, trạng thái (thể), tính tan trong nước... là các tính chất vật lí (không có sự tạo thành chất mới)."
+            },
+            {
+                q: "Sự biến đổi của một chất tạo ra chất mới thể hiện tính chất gì của chất đó?",
+                options: [
+                    "Tính chất vật lí.",
+                    "Tính chất hoá học.",
+                    "Tính dẫn điện và dẫn nhiệt.",
+                    "Tính tan trong nước."
+                ],
+                ans: 1,
+                exp: "Khả năng biến đổi của một chất để tạo thành chất mới là tính chất hóa học của chất đó."
+            },
+            {
+                q: "Nơi đặt tiêu bản để quan sát trên kính hiển vi quang học được gọi là gì?",
+                options: [
+                    "Đĩa quay vật kính.",
+                    "Bàn kính.",
+                    "Chân kính.",
+                    "Thân kính."
+                ],
+                ans: 1,
+                exp: "Tiêu bản mẫu vật được đặt trên bàn kính và cố định bằng kẹp giữ mẫu."
+            },
+            {
+                q: "Theo các bước sử dụng kính hiển vi quang học, bước đầu tiên cần thực hiện là gì?",
+                options: [
+                    "Vặn ốc nhỏ thật chậm để lấy nét.",
+                    "Chọn vật kính thích hợp (10x, 40x hoặc 100x) theo mục đích quan sát.",
+                    "Đặt tiêu bản lên bàn kính rồi vặn ốc to ngay lập tức.",
+                    "Bật đèn chiếu sáng ở mức tối đa."
+                ],
+                ans: 1,
+                exp: "Bước 1 khi sử dụng kính hiển vi quang học là chọn vật kính thích hợp (10x, 40x hoặc 100x) theo mục đích quan sát."
+            },
+            {
+                q: "Khi đặt tiêu bản lên bàn kính và dùng kẹp để giữ, thao tác vặn ốc to theo chiều kim đồng hồ có tác dụng gì?",
+                options: [
+                    "Hạ vật kính gần sát vào tiêu bản.",
+                    "Đưa vật kính lên từ từ để quan sát mẫu vật.",
+                    "Làm cho mẫu vật hiển thị rõ nét ngay lập tức.",
+                    "Tắt nguồn điện của đèn chiếu sáng."
+                ],
+                ans: 0,
+                exp: "Theo quy trình sử dụng kính hiển vi trong SGK KHTN 6: Sau khi kẹp tiêu bản, vặn ốc to theo chiều kim đồng hồ để hạ vật kính gần sát vào tiêu bản (cẩn thận không để mặt vật kính chạm vào tiêu bản), sau đó mới nhìn vào thị kính và vặn ốc to theo chiều ngược lại để đưa vật kính lên từ từ."
+            }
+        ];
+
+        // PHẦN 2: 13 CÂU TRẮC NGHIỆM ĐÚNG - SAI
+        const BANK_PART2 = [
+            {
+                q: "Khi nói về việc quan sát bằng giác quan và hiện tượng đánh lừa thị giác:",
+                items: [
+                    { label: "a", text: "Giác quan của con người luôn luôn chính xác tuyệt đối trong mọi trường hợp quan sát bằng mắt thường.", ans: false },
+                    { label: "b", text: "Hình ảnh đánh lừa thị giác cho thấy mắt ta có thể nhìn nhận sai lệch về độ dài thực tế của hai đoạn thẳng khi chưa dùng dụng cụ đo.", ans: true },
+                    { label: "c", text: "Để biết chính xác đoạn thẳng nào dài hơn, ta chỉ cần nhìn thật kỹ bằng mắt mà không cần dùng thước.", ans: false },
+                    { label: "d", text: "Các hiện tượng đánh lừa thị giác chứng tỏ rằng các giác quan có thể cảm nhận sai một số hiện tượng trong thực tế.", ans: true }
+                ],
+                exp: "a) Sai, giác quan có thể cảm nhận sai. b) Đúng. c) Sai, phải dùng thước đo mới biết chính xác. d) Đúng."
+            },
+            {
+                q: "Khi nói về vai trò và tầm quan trọng của việc ước lượng chiều dài:",
+                items: [
+                    { label: "a", text: "Ước lượng chiều dài cần đo giúp ta chọn được thước có giới hạn đo (GHĐ) và độ chia nhỏ nhất (ĐCNN) thích hợp.", ans: true },
+                    { label: "b", text: "Không cần ước lượng chiều dài trước khi đo vì dùng loại thước nào cũng cho kết quả chính xác giống nhau hoàn toàn.", ans: false },
+                    { label: "c", text: "Bước ước lượng chiều dài là bước đầu tiên trong quy trình các bước đo chiều dài.", ans: true },
+                    { label: "d", text: "Ước lượng chiều dài giúp tiết kiệm thời gian và lựa chọn dụng cụ đo phù hợp với kích thước, hình dạng vật cần đo.", ans: true }
+                ],
+                exp: "a) Đúng. b) Sai, chọn thước không phù hợp sẽ gây sai số lớn hoặc phải đo nhiều lần. c) Đúng. d) Đúng."
+            },
+            {
+                q: "Về ví dụ minh họa sự sai lệch của giác quan và ý nghĩa của việc đo đạc:",
+                items: [
+                    { label: "a", text: "Mắt thường nhìn hai đoạn thẳng qua hình ảnh có thể thấy chúng bằng nhau hoặc khác nhau nhưng thực tế qua phép đo mới khẳng định chính xác.", ans: true },
+                    { label: "b", text: "Giác quan con người không bao giờ mắc sai lầm khi quan sát các kích thước hình học.", ans: false },
+                    { label: "c", text: "Để tránh cảm nhận sai bằng giác quan trong đo lường, người ta phải dùng các dụng cụ đo chuẩn xác như thước thẳng, thước dây.", ans: true },
+                    { label: "d", text: "Cảm nhận độ dài ngắn bằng mắt luôn luôn chính xác tuyệt đối mà không cần kiểm chứng.", ans: false }
+                ],
+                exp: "a) Đúng. b) Sai. c) Đúng. d) Sai, cảm nhận bằng mắt chỉ mang tính ước lượng tương đối."
+            },
+            {
+                q: "Các nhận định nói về giới hạn đo (GHĐ) và độ chia nhỏ nhất (ĐCNN):",
+                items: [
+                    { label: "a", text: "GHĐ của thước là độ dài lớn nhất ghi trên thước.", ans: true },
+                    { label: "b", text: "ĐCNN của thước là độ dài giữa hai vạch chia liên tiếp trên thước.", ans: true },
+                    { label: "c", text: "Nhờ ước lượng trước chiều dài, ta biết được khoảng giá trị cần đo để đối chiếu với GHĐ của thước cho phù hợp.", ans: true },
+                    { label: "d", text: "ĐCNN của thước hoàn toàn không quan trọng dù ta đã ước lượng được chiều dài vật", ans: false }
+                ],
+                exp: "a) Đúng. b) Đúng. c) Đúng. d) Sai, ĐCNN quyết định độ chính xác của kết quả đo."
+            },
+            {
+                q: "Tổng kết về kỹ năng ước lượng và nhận biết hiện tượng qua giác quan:",
+                items: [
+                    { label: "a", text: "Nhận biết bằng giác quan chỉ mang tính chất định tính ban đầu, chưa cho kết quả chính xác bằng con số cụ thể.", ans: true },
+                    { label: "b", text: "Ước lượng trước khi đo giúp học sinh rèn luyện tư duy phỏng đoán khoa học và thao tác đo chuẩn xác.", ans: true },
+                    { label: "c", text: "Mọi kích thước vật thể trong tự nhiên đều có thể đo lường chính xác chỉ bằng cách nhìn bằng mắt.", ans: false },
+                    { label: "d", text: "Việc kết hợp ước lượng trước khi đo và dùng dụng cụ đo đúng chuẩn giúp loại bỏ sai sót do cảm tính của giác quan.", ans: true }
+                ],
+                exp: "a) Đúng. b) Đúng. c) Sai, phải dùng dụng cụ đo. d) Đúng."
+            },
+            {
+                q: "Ứng dụng ước lượng chiều dài thực tế:",
+                items: [
+                    { label: "a", text: "Ước lượng chiều dài cần đo giúp ta chọn được thước có giới hạn đo (GHĐ) và độ chia nhỏ nhất (ĐCNN) phù hợp.", ans: true },
+                    { label: "b", text: "Nên chọn thước có GHĐ nhỏ hơn chiều dài cần đo để kết quả đo chính xác hơn.", ans: false },
+                    { label: "c", text: "Để đo chiều dài lớp học, nên dùng thước cuộn có GHĐ 10 m thay vì thước kẻ có GHĐ 30 cm.", ans: true },
+                    { label: "d", text: "Muốn đo chiều dài chính xác đến milimét, nên chọn thước có ĐCNN là 1 cm.", ans: false }
+                ],
+                exp: "a) Đúng. b) Sai, nên chọn thước có GHĐ lớn hơn hoặc bằng chiều dài cần đo. c) Đúng. d) Sai, muốn chính xác đến mm phải chọn thước có ĐCNN là 1 mm."
+            },
+            {
+                q: "Khi nói về tính chất vật lí của khí oxygen:",
+                items: [
+                    { label: "a", text: "Ở điều kiện thường, oxygen tồn tại ở thể khí, hoàn toàn không màu, không mùi, không vị và nặng hơn không khí.", ans: true },
+                    { label: "b", text: "Khí oxygen tan rất nhiều trong nước ở điều kiện thường nên các loài sinh vật dưới nước có thể hô hấp dễ dàng.", ans: false },
+                    { label: "c", text: "Khi hạ nhiệt độ xuống -183 °C, oxygen chuyển sang thể lỏng có màu xanh nhạt.", ans: true },
+                    { label: "d", text: "Ở thể rắn (khi hạ xuống -218 °C), oxygen mất hoàn toàn màu sắc và trở nên trong suốt.", ans: false }
+                ],
+                exp: "a) Đúng. b) Sai, khí oxygen ít tan trong nước. c) Đúng. d) Sai, oxygen ở thể rắn cũng có màu xanh nhạt."
+            },
+            {
+                q: "Về tầm quan trọng của oxygen đối với sự sống và sự cháy:",
+                items: [
+                    { label: "a", text: "Ở đâu có oxygen thì ở đó có sự sống, oxygen là chất không thể thiếu cho quá trình hô hấp của đa số động, thực vật.", ans: true },
+                    { label: "b", text: "Khí oxygen trực tiếp tham gia và đóng vai trò quyết định để duy trì sự cháy của nhiên liệu nhằm thắp sáng và cung cấp nhiệt.", ans: true },
+                    { label: "c", text: "Nếu không có khí oxygen thì các phản ứng cháy vẫn có thể xảy ra bình thường miễn là có đủ chất đốt.", ans: false },
+                    { label: "d", text: "Trong y tế, oxygen được cung cấp qua các thiết bị chuyên dụng để hỗ trợ cho bệnh nhân gặp khó khăn về đường hô hấp.", ans: true }
+                ],
+                exp: "a) Đúng. b) Đúng. c) Sai, không có oxygen thì sự cháy không thể duy trì. d) Đúng."
+            },
+            {
+                q: "Về thành phần thể tích của không khí trong điều kiện thông thường:",
+                items: [
+                    { label: "a", text: "Không khí là một đơn chất tinh khiết chỉ chứa hoàn toàn khí oxygen.", ans: false },
+                    { label: "b", text: "Khí chiếm thành phần thể tích lớn nhất trong không khí là khí nitrogen (khoảng 78%).", ans: true },
+                    { label: "c", text: "Khí oxygen chiếm tỉ lệ khoảng 21% thể tích không khí, là tỉ lệ thích hợp duy trì sự sống.", ans: true },
+                    { label: "d", text: "Phần thể tích còn lại (khoảng 1%) bao gồm carbon dioxide, hơi nước và một số chất khí khác.", ans: true }
+                ],
+                exp: "a) Sai, không khí là hỗn hợp nhiều chất khí. b) Đúng (78% nitrogen). c) Đúng (21% oxygen). d) Đúng (1% các khí khác)."
+            },
+            {
+                q: "Về vai trò của các thành phần trong không khí đối với tự nhiên:",
+                items: [
+                    { label: "a", text: "Sự luân chuyển của không khí giúp điều hòa khí hậu, làm cho bề mặt Trái Đất không bị quá nóng hoặc quá lạnh.", ans: true },
+                    { label: "b", text: "Khí carbon dioxide có hại tuyệt đối và không đóng vai trò gì đối với sinh giới trên Trái Đất.", ans: false },
+                    { label: "c", text: "Khi có mưa dông kèm sấm sét, nitrogen trong không khí được chuyển hóa thành nguồn phân bón tự nhiên có lợi cho cây cối.", ans: true },
+                    { label: "d", text: "Không khí bao quanh Trái Đất còn đóng vai trò như một lớp khiên bảo vệ khỏi các thiên thạch rơi từ vũ trụ.", ans: true }
+                ],
+                exp: "a) Đúng. b) Sai, carbon dioxide rất cần thiết cho quá trình quang hợp của cây xanh. c) Đúng. d) Đúng."
+            },
+            {
+                q: "Về các nguyên nhân gây ô nhiễm không khí:",
+                items: [
+                    { label: "a", text: "Ô nhiễm không khí chỉ xuất phát từ các hoạt động đốt nhiên liệu của con người mà không do tự nhiên.", ans: false },
+                    { label: "b", text: "Khói, bụi từ các phương tiện giao thông và nhà máy công nghiệp là những tác nhân chính làm thay đổi thành phần không khí.", ans: true },
+                    { label: "c", text: "Sự gia tăng lượng khí carbon dioxide quá mức trong khí quyển sẽ góp phần gây ra hiện tượng Trái Đất ấm lên và băng tan ở hai cực.", ans: true },
+                    { label: "d", text: "Khí carbon dioxide mặc dù không phải là khí độc nhưng nếu tập trung với hàm lượng quá cao cũng làm cho không khí bị ô nhiễm và ảnh hưởng xấu đến sức khỏe.", ans: true }
+                ],
+                exp: "a) Sai, ô nhiễm không khí do cả tự nhiên (cháy rừng, núi lửa) và con người. b) Đúng. c) Đúng. d) Đúng."
+            },
+            {
+                q: "Về hiện tượng và hậu quả của mưa acid liên quan đến không khí ô nhiễm:",
+                items: [
+                    { label: "a", text: "Mưa acid hình thành do nước mưa hòa tan các khí thải độc hại sinh ra từ quá trình sản xuất công nghiệp và đốt nhiên liệu.", ans: true },
+                    { label: "b", text: "Mưa acid hoàn toàn không gây ảnh hưởng gì đến các công trình xây dựng hay cây trồng.", ans: false },
+                    { label: "c", text: "Bụi, khói và các khí độc trong không khí ô nhiễm là nguyên nhân chính gây ra các bệnh nguy hiểm về đường hô hấp cho con người.", ans: true },
+                    { label: "d", text: "Hiện tượng ô nhiễm không khí chỉ gây tác hại cục bộ tại nơi phát sinh nguồn thải, không ảnh hưởng đến toàn cầu.", ans: false }
+                ],
+                exp: "a) Đúng. b) Sai, mưa acid ăn mòn công trình và làm hỏng cây trồng. c) Đúng. d) Sai, ô nhiễm không khí ảnh hưởng toàn cầu (biến đổi khí hậu)."
+            },
+            {
+                q: "Khi bàn về các biện pháp bảo vệ môi trường không khí:",
+                items: [
+                    { label: "a", text: "Trồng nhiều cây xanh và tích cực bảo vệ rừng là một trong những biện pháp cơ bản, hiệu quả để giữ gìn không khí trong lành.", ans: true },
+                    { label: "b", text: "Khuyến khích sử dụng phương tiện giao thông cá nhân thay vì phương tiện công cộng giúp giảm thiểu đáng kể khí thải độc hại.", ans: false },
+                    { label: "c", text: "Phát triển và sử dụng các nguồn năng lượng sạch (như năng lượng mặt trời, gió, nước) góp phần bảo vệ bầu khí quyển.", ans: true },
+                    { label: "d", text: "Các cơ quan quản lý cần ban hành và thực hiện nghiêm ngặt các quy định về xử lý khí thải, chất thải độc hại từ nhà máy.", ans: true }
+                ],
+                exp: "a) Đúng. b) Sai, cần khuyến khích phương tiện giao thông công cộng để giảm khí thải. c) Đúng. d) Đúng."
+            }
+        ];
+
+        // PHẦN 3: 20 CÂU TRẮC NGHIỆM TRẢ LỜI NGẮN
+        const BANK_PART3 = [
+            {
+                q: "Một cốc thủy tinh rỗng nặng 25,0 g. Khi cho 20 hạt thủy tinh giống hệt nhau vào cốc rồi đem cân thì máy hiển thị 45,0 g. Khối lượng của 1 hạt thủy tinh là bao nhiêu gam?",
+                unit: "gam (g)",
+                accepted: ["1", "1,0", "1.0", "1g", "1 g", "1gam", "1 gam", "1,0g", "1,0 g", "1.0g", "1.0 g"],
+                displayAns: "1 g (hoặc 1,0 g)",
+                exp: "Khối lượng 20 hạt thủy tinh là: 45,0 - 25,0 = 20,0 (g). Khối lượng 1 hạt thủy tinh là: 20,0 : 20 = 1 (g)."
+            },
+            {
+                q: "Một học sinh dùng cốc thủy tinh nặng 25,0 g và cân 50 cái kẹp giấy giống hệt nhau thì máy hiện tổng khối lượng là 67,5 g. Khối lượng của 1 cái kẹp giấy là bao nhiêu gam?",
+                unit: "gam (g)",
+                accepted: ["0,85", "0.85", "0,85g", "0,85 g", "0.85g", "0.85 g", "0,85gam", "0,85 gam"],
+                displayAns: "0,85 g",
+                exp: "Khối lượng 50 cái kẹp giấy là: 67,5 - 25,0 = 42,5 (g). Khối lượng 1 cái kẹp giấy là: 42,5 : 50 = 0,85 (g)."
+            },
+            {
+                q: "Để xác định khối lượng của một lượng chất lỏng bằng cân điện tử nhưng quên không bấm nút trừ bì (Tare), một học sinh cân cốc rỗng được 85,4 g. Sau khi đổ chất lỏng vào cốc, cân hiển thị 240,0 g. Khối lượng thực tế của chất lỏng là bao nhiêu gam?",
+                unit: "gam (g)",
+                accepted: ["154,6", "154.6", "154,6g", "154,6 g", "154.6g", "154.6 g", "154,6gam", "154,6 gam"],
+                displayAns: "154,6 g",
+                exp: "Khối lượng thực tế của chất lỏng là: 240,0 - 85,4 = 154,6 (g)."
+            },
+            {
+                q: "Một học sinh dùng đồng hồ bấm giây để đo thời gian bạn hát. Do nhấn nút Stop trễ 1,5 giây so với lúc kết thúc, đồng hồ hiển thị 105,5 giây. Thời gian hát thực tế là bao nhiêu giây?",
+                unit: "giây (s)",
+                accepted: ["104", "104,0", "104.0", "104s", "104 s", "104giây", "104 giây", "104,0s", "104,0 s"],
+                displayAns: "104 giây",
+                exp: "Do bấm Stop trễ 1,5 giây nên đồng hồ đã chạy dư thêm 1,5 giây. Thời gian hát thực tế là: 105,5 - 1,5 = 104 (giây)."
+            },
+            {
+                q: "Khi đo thời gian xe lăn chuyển động, bạn Minh mắc hai sai sót: bấm Start trễ 0,3s và bấm Stop sớm 0,2s so với thực tế. Khi đó màn hình hiển thị 4,8 giây. Thời gian chuyển động thực tế của xe là bao nhiêu giây?",
+                unit: "giây (s)",
+                accepted: ["5,3", "5.3", "5,3s", "5,3 s", "5.3s", "5.3 s", "5,3giây", "5,3 giây"],
+                displayAns: "5,3 giây",
+                exp: "Bấm Start trễ 0,3s làm thiếu 0,3s; bấm Stop sớm 0,2s làm thiếu thêm 0,2s. Thời gian thực tế là: 4,8 + 0,3 + 0,2 = 5,3 (giây)."
+            },
+            {
+                q: "Bạn Lan đo thời gian chạy của hai bạn liên tiếp. Khi bạn thứ nhất chạy xong (hiển thị 14,5 giây), Lan quên nhấn nút Reset mà để đồng hồ chạy tiếp cho bạn thứ hai. Khi bạn thứ hai về đích, đồng hồ chỉ 31,2 giây. Thời gian chạy thực tế của bạn thứ hai là bao nhiêu giây?",
+                unit: "giây (s)",
+                accepted: ["16,7", "16.7", "16,7s", "16,7 s", "16.7s", "16.7 s", "16,7giây", "16,7 giây"],
+                displayAns: "16,7 giây",
+                exp: "Thời gian chạy thực tế của bạn thứ hai là: 31,2 - 14,5 = 16,7 (giây)."
+            },
+            {
+                q: "Một nhiệt kế thủy ngân có thang đo từ -20 °C đến 110 °C, khoảng cách giữa hai vạch liên tiếp 40 °C và 50 °C được chia thành 10 khoảng nhỏ bằng nhau. Cột thủy ngân dừng ở vạch chia nhỏ thứ 5 tính từ vạch 40 °C theo chiều tăng. Nhiệt độ đo được là bao nhiêu độ C?",
+                unit: "°C (độ C)",
+                accepted: ["45", "45°c", "45 °c", "45độc", "45 độ c", "45c", "45 c"],
+                displayAns: "45 °C",
+                exp: "ĐCNN của nhiệt kế là (50 - 40) : 10 = 1 °C. Dừng ở vạch thứ 5 tính từ 40 °C theo chiều tăng nên nhiệt độ là: 40 + 5 × 1 = 45 (°C)."
+            },
+            {
+                q: "Khi đo nhiệt độ nước nóng, học sinh để bầu nhiệt kế chạm sát đáy cốc (nơi nhận nhiệt trực tiếp từ nguồn đun), khiến số chỉ cao hơn nhiệt độ khối nước 1,5 °C và hiển thị 68,5 °C. Nhiệt độ thực tế của khối nước là bao nhiêu độ C?",
+                unit: "°C (độ C)",
+                accepted: ["67", "67,0", "67.0", "67°c", "67 °c", "67độc", "67 độ c", "67c", "67 c"],
+                displayAns: "67 °C",
+                exp: "Nhiệt độ thực tế của khối nước là: 68,5 - 1,5 = 67 (°C)."
+            },
+            {
+                q: "Khi dùng nhiệt kế y tế đo nhiệt độ, do rút ra quá sớm khi chưa đủ thời gian, nhiệt độ hiển thị mới đạt 35,8 °C. Khi kẹp lại đúng thời gian quy định, cột thủy ngân dừng ở 36,9 °C. Nhiệt độ cơ thể thực tế là bao nhiêu độ C?",
+                unit: "°C (độ C)",
+                accepted: ["36,9", "36.9", "36,9°c", "36,9 °c", "36.9°c", "36.9 °c", "36,9độc", "36,9 độ c", "36,9c"],
+                displayAns: "36,9 °C",
+                exp: "Khi kẹp đủ thời gian quy định, thủy ngân dãn nở tối đa tương ứng với nhiệt độ thực tế của cơ thể là 36,9 °C."
+            },
+            {
+                q: "Trước khi đặt túi cam lên cân đồng hồ, Nam quên điều chỉnh ốc cân nên kim đã lệch sẵn ở vạch 100 g (bên phải số 0). Khi đặt túi cam lên, kim dừng ở vạch 1,6 kg. Khối lượng thực tế của túi cam là bao nhiêu kilôgam?",
+                unit: "kilôgam (kg)",
+                accepted: ["1,5", "1.5", "1,5kg", "1,5 kg", "1.5kg", "1.5 kg", "1,5kilôgam", "1,5 kilôgam"],
+                displayAns: "1,5 kg",
+                exp: "Đổi 100 g = 0,1 kg. Vì kim lệch sẵn 0,1 kg bên phải số 0 nên khối lượng thực tế của túi cam là: 1,6 - 0,1 = 1,5 (kg)."
+            },
+            {
+                q: "Trước khi đo thời gian chạy 100 m, Nam quên điều chỉnh kim đồng hồ bấm giây về vạch số 0 nên kim đã chỉ sẵn ở vạch 3 giây. Khi về đích, kim dừng ở vạch 18 giây. Thời gian chạy thực tế là bao nhiêu giây?",
+                unit: "giây (s)",
+                accepted: ["15", "15s", "15 s", "15giây", "15 giây"],
+                displayAns: "15 giây",
+                exp: "Thời gian chạy thực tế là: 18 - 3 = 15 (giây)."
+            },
+            {
+                q: "Cho các nhiên liệu: than đá, củi, xăng, dầu hỏa, khí thiên nhiên, khí hóa lỏng LPG. Có bao nhiêu loại nhiên liệu tồn tại ở thể rắn trong danh sách trên?",
+                unit: "loại",
+                accepted: ["2", "2loại", "2 loại"],
+                displayAns: "2 (gồm than đá và củi)",
+                exp: "Các nhiên liệu ở thể rắn trong danh sách là: than đá và củi (2 loại). Xăng, dầu hỏa là nhiên liệu lỏng; khí thiên nhiên, LPG là nhiên liệu khí."
+            },
+            {
+                q: "Khi thực hiện thảo luận nhóm để đề xuất phương án tìm hiểu tính chất của nhiên liệu lỏng, học sinh liệt kê danh sách các nhiên liệu lỏng quen thuộc: xăng, dầu hỏa, dầu diesel, cồn y tế và khí methane. Có bao nhiêu loại nhiên liệu lỏng thực sự nằm trong danh sách vừa liệt kê?",
+                unit: "loại",
+                accepted: ["4", "4loại", "4 loại"],
+                displayAns: "4 (xăng, dầu hỏa, dầu diesel, cồn y tế)",
+                exp: "Có 4 nhiên liệu lỏng là: xăng, dầu hỏa, dầu diesel và cồn y tế (khí methane là nhiên liệu khí)."
+            },
+            {
+                q: "Khi xảy ra một đám cháy nhỏ do xăng hoặc dầu hỏa bị đổ ra sàn, các cách dập lửa an toàn: (1) Dùng cát phủ kín. (2) Dùng chăn thấm nước trùm kín. (3) Dùng bình chữa cháy chuyên dụng. (Có bao nhiêu cách đúng?)",
+                unit: "cách",
+                accepted: ["3", "3cách", "3 cách"],
+                displayAns: "3 cách",
+                exp: "Cả 3 cách (dùng cát phủ kín, dùng chăn thấm nước trùm kín để ngăn oxygen, và dùng bình chữa cháy chuyên dụng) đều là cách dập đám cháy xăng dầu nhỏ an toàn. (Lưu ý: Không tạt nước trực tiếp vào đám cháy xăng dầu)."
+            },
+            {
+                q: "Dùng cân Roberval thăng bằng với các quả cân bên phải là 100 g, 50 g, 3 quả 20 g và 2 quả 2 g. Khối lượng của vật là bao nhiêu gam?",
+                unit: "gam (g)",
+                accepted: ["214", "214g", "214 g", "214gam", "214 gam"],
+                displayAns: "214 g",
+                exp: "Tổng khối lượng các quả cân là: 100 + 50 + (3 × 20) + (2 × 2) = 100 + 50 + 60 + 4 = 214 (g)."
+            },
+            {
+                q: "Bạn Mai đứng lên cân sức khỏe thấy chỉ 42 kg, bế thêm em bé thấy chỉ 55 kg. Khối lượng em bé là bao nhiêu kg?",
+                unit: "kg",
+                accepted: ["13", "13kg", "13 kg", "13kilôgam", "13 kilôgam"],
+                displayAns: "13 kg",
+                exp: "Khối lượng của em bé là: 55 - 42 = 13 (kg)."
+            },
+            {
+                q: "Đặt cốc rỗng lên cân điện tử chỉ 120 g, rót nước vào chỉ 370 g. Khối lượng nước trong cốc là bao nhiêu gam?",
+                unit: "gam (g)",
+                accepted: ["250", "250g", "250 g", "250gam", "250 gam"],
+                displayAns: "250 g",
+                exp: "Khối lượng nước trong cốc là: 370 - 120 = 250 (g)."
+            },
+            {
+                q: "Gia đình bạn Lan mỗi ngày dùng 0,5 kg khí gas. Một bình gas 12 kg dùng được bao nhiêu ngày?",
+                unit: "ngày",
+                accepted: ["24", "24ngày", "24 ngày"],
+                displayAns: "24 ngày",
+                exp: "Số ngày sử dụng hết bình gas 12 kg là: 12 : 0,5 = 24 (ngày)."
+            },
+            {
+                q: "Xe máy đi 100 km hết 2,5 lít xăng. Đi quãng đường 250 km hết bao nhiêu lít xăng?",
+                unit: "lít",
+                accepted: ["6,25", "6.25", "6,25l", "6,25 l", "6,25lít", "6,25 lít", "6.25lít", "6.25 lít"],
+                displayAns: "6,25 lít",
+                exp: "Lượng xăng cần dùng để đi 250 km là: (250 : 100) × 2,5 = 2,5 × 2,5 = 6,25 (lít)."
+            },
+            {
+                q: "Bình gas 12 kg dùng hết trong 24 ngày. Trung bình mỗi ngày dùng bao nhiêu gam khí gas?",
+                unit: "gam (g)",
+                accepted: ["500", "500g", "500 g", "500gam", "500 gam"],
+                displayAns: "500 g",
+                exp: "Đổi 12 kg = 12 000 g. Trung bình mỗi ngày dùng hết: 12 000 : 24 = 500 (g)."
+            }
+        ];
+
+        // PHẦN 4: 15 CÂU TỰ LUẬN
+        const BANK_PART4 = [
+            {
+                q: "Em hãy cho biết các hoạt động nghiên cứu sau đây thuộc lĩnh vực chủ yếu nào của Khoa học tự nhiên (Vật lí học, Hóa học, Sinh học, Khoa học Trái Đất hay Thiên văn học)?\na) Nghiên cứu quá trình quang hợp và sự sinh trưởng của cây lúa.\nb) Tìm hiểu quy luật chuyển động của các hành tinh và hiện tượng nhật thực, nguyệt thực.\nc) Nghiên cứu quá trình nung đá vôi tạo thành vôi sống và khí carbon dioxide.\nd) Tìm hiểu tác dụng của lực ma sát lên chuyển động của xe đạp trên mặt đường.",
+                keywords: ["sinh học", "thiên văn học", "hóa học", "vật lí"],
+                rubric: "• a) Thuộc lĩnh vực Sinh học (0,25 điểm).\n• b) Thuộc lĩnh vực Thiên văn học (0,25 điểm).\n• c) Thuộc lĩnh vực Hóa học (0,25 điểm).\n• d) Thuộc lĩnh vực Vật lí học (0,25 điểm)."
+            },
+            {
+                q: "Cho các đối tượng sau: con cá chép, chiếc bàn gỗ, cây hoa hồng, hòn đá cuội, robot lau nhà thông minh, vi khuẩn đường ruột.\na) Em hãy sắp xếp các đối tượng trên vào hai nhóm: vật sống và vật không sống.\nb) Giải thích vì sao robot lau nhà thông minh có thể di chuyển và tránh chướng ngại vật nhưng vẫn được xếp vào nhóm vật không sống?",
+                keywords: ["cá chép", "hoa hồng", "vi khuẩn", "bàn gỗ", "đá cuội", "robot", "trao đổi chất", "sinh trưởng"],
+                rubric: "• a) Phân loại đúng (0,5 điểm):\n  - Vật sống: con cá chép, cây hoa hồng, vi khuẩn đường ruột.\n  - Vật không sống: chiếc bàn gỗ, hòn đá cuội, robot lau nhà thông minh.\n• b) Giải thích (0,5 điểm): Robot lau nhà thông minh tuy di chuyển được (nhờ lập trình và nguồn điện) nhưng không có các đặc trưng sống như trao đổi chất với môi trường, lớn lên (sinh trưởng, phát triển) và sinh sản nên là vật không sống."
+            },
+            {
+                q: "Khoa học tự nhiên có vai trò rất quan trọng trong cuộc sống. Em hãy nêu 4 vai trò chính của Khoa học tự nhiên và lấy 4 ví dụ thực tế minh họa việc ứng dụng Khoa học tự nhiên vào sản xuất hoặc bảo vệ sức khỏe con người.",
+                keywords: ["nhận thức", "ứng dụng", "sản xuất", "sức khỏe", "môi trường"],
+                rubric: "• 4 vai trò chính của KHTN (0,5 điểm):\n  1. Hoạt động nghiên cứu khoa học, mở rộng tri thức về thế giới tự nhiên.\n  2. Nâng cao nhận thức của con người về thế giới tự nhiên.\n  3. Ứng dụng công nghệ vào cuộc sống, sản xuất, kinh doanh.\n  4. Chăm sóc sức khỏe con người và bảo vệ môi trường, phát triển bền vững.\n• Lấy được 4 ví dụ thực tế hợp lí (0,5 điểm): Ví dụ sản xuất vaccine phòng bệnh, hệ thống tưới nước tự động trong nông nghiệp, chế tạo pin năng lượng mặt trời, dự báo thời tiết..."
+            },
+            {
+                q: "a. Nêu đặc điểm của chất ở thể rắn, lỏng, khí.\nb. Ta có thể đi được trên mặt nước đóng băng đủ dày. Điều này thể hiện đặc điểm gì của chất ở thể rắn.",
+                keywords: ["hình dạng xác định", "thể tích xác định", "rất khó bị nén", "liên kết chặt"],
+                rubric: "• a) Đặc điểm 3 thể của chất (0,75 điểm):\n  - Thể rắn: Các hạt liên kết rất chặt chẽ; có hình dạng và thể tích xác định; rất khó bị nén.\n  - Thể lỏng: Các hạt liên kết không chặt bằng thể rắn; có thể tích xác định nhưng không có hình dạng xác định (mang hình dạng phần vật chứa); khó bị nén.\n  - Thể khí: Các hạt chuyển động tự do về mọi phía; không có hình dạng và thể tích xác định (chiếm toàn bộ bình chứa); dễ bị nén.\n• b) Giải thích (0,25 điểm): Nước đóng băng ở thể rắn có các hạt liên kết rất chặt chẽ với nhau, có hình dạng và thể tích xác định, rất khó bị nén nên chịu được lực tác dụng khi ta đi trên mặt băng đủ dày."
+            },
+            {
+                q: "Hãy xác định tên quá trình chuyển thể của chất diễn ra trong mỗi hiện tượng thực tế sau đây và giải thích ngắn gọn:\na) Quần áo ướt sau khi phơi ngoài nắng hoặc nơi thoáng gió một thời gian thì khô ráo.\nb) Khi lấy một lon nước ngọt từ trong ngăn mát tủ lạnh đặt ra mặt bàn, một lúc sau ta thấy có các giọt nước nhỏ li ti bám bên ngoài vỏ lon.",
+                keywords: ["bay hơi", "ngưng tụ", "thể lỏng sang thể khí", "hơi nước"],
+                rubric: "• a) Sự bay hơi (0,5 điểm): Nước trong quần áo ướt chuyển từ thể lỏng sang thể khí (hơi nước) bay vào không khí.\n• b) Sự ngưng tụ (0,5 điểm): Hơi nước trong không khí xung quanh gặp vỏ lon nước ngọt lạnh nên ngưng tụ từ thể khí (hơi) thành các giọt nước ở thể lỏng bám ngoài vỏ lon."
+            },
+            {
+                q: "Hãy xác định tên quá trình chuyển thể của chất diễn ra trong mỗi hiện tượng thực tế sau đây và giải thích ngắn gọn:\na) Vào những buổi sáng mùa đông lạnh giá, khi ta đi xe máy hoặc ô tô đóng kín cửa kính, mặt trong của kính xe thường bị mờ đục do các hạt nước nhỏ bám vào. Em hãy giải thích nguyên nhân của hiện tượng này.\nb) Trong các xưởng đúc đồng hoặc đúc gang, người thợ thường nung chảy các kim loại này rồi đổ vào khuôn có sẵn. Sau một thời gian, vật bằng đồng hoặc gang trong khuôn sẽ cứng lại và giữ nguyên hình dáng của khuôn. Trong quá trình đúc đồng hoặc đúc gang, lần lượt có những quá trình chuyển thể nào xảy ra từ lúc nung kim loại đến khi thành phẩm?",
+                keywords: ["ngưng tụ", "nóng chảy", "đông đặc", "hơi nước"],
+                rubric: "• a) Sự ngưng tụ (0,5 điểm): Hơi nước ấm trong hơi thở của người ngồi trong xe gặp mặt kính xe lạnh vào mùa đông nên ngưng tụ thành các hạt nước nhỏ li ti làm mờ mặt trong kính.\n• b) Quá trình đúc kim loại gồm 2 quá trình chuyển thể lần lượt (0,5 điểm):\n  1. Sự nóng chảy: Nung đồng/gang từ thể rắn chuyển sang thể lỏng.\n  2. Sự đông đặc: Đồng/gang lỏng trong khuôn nguội dần và chuyển từ thể lỏng sang thể rắn."
+            },
+            {
+                q: "Hãy xác định tên quá trình chuyển thể của chất diễn ra trong hiện tượng thực tế sau đây và giải thích ngắn gọn: Vào mùa hè, khi ta lấy một viên nước đá từ tủ lạnh ra để ở ngoài không khí, chỉ sau một thời gian ngắn viên đá sẽ biến thành nước. Nếu ta cho cốc nước đó trở lại ngăn đá tủ lạnh, nước sẽ chuyển thành đá cứng. Hãy gọi tên các quá trình chuyển thể diễn ra trong hai trường hợp trên.",
+                keywords: ["nóng chảy", "đông đặc", "rắn sang lỏng", "lỏng sang rắn"],
+                rubric: "• Trường hợp 1 - Lấy viên nước đá ra ngoài biến thành nước (0,5 điểm): Là quá trình nóng chảy (nước chuyển từ thể rắn sang thể lỏng do thu nhiệt từ không khí).\n• Trường hợp 2 - Cho cốc nước vào ngăn đá chuyển thành đá cứng (0,5 điểm): Là quá trình đông đặc (nước chuyển từ thể lỏng sang thể rắn khi hạ nhiệt độ)."
+            },
+            {
+                q: "Sự bay hơi và sự sôi đều là quá trình chất chuyển từ thể lỏng sang thể khí (hơi). Em hãy nêu điểm khác nhau cơ bản giữa sự bay hơi và sự sôi.",
+                keywords: ["mặt thoáng", "nhiệt độ bất kì", "nhiệt độ sôi", "trong lòng chất lỏng"],
+                rubric: "• Điểm khác nhau cơ bản giữa sự bay hơi và sự sôi (1,0 điểm):\n  - Sự bay hơi: Xảy ra ở bất kì nhiệt độ nào và chỉ xảy ra trên bề mặt thoáng của chất lỏng.\n  - Sự sôi: Chỉ xảy ra ở một nhiệt độ xác định (nhiệt độ sôi) và sự chuyển thể từ lỏng sang hơi xảy ra cả ở trên mặt thoáng lẫn trong lòng chất lỏng (tạo các bọt khí nổi lên)."
+            },
+            {
+                q: "Quan sát dây dẫn điện dùng trong gia đình, ta thấy phần lõi bên trong thường làm bằng đồng (kim loại), còn lớp vỏ bọc bên ngoài làm bằng nhựa hoặc cao su. Dựa vào tính chất của vật liệu, em hãy giải thích tại sao người ta lại cấu tạo dây dẫn điện như vậy?",
+                keywords: ["dẫn điện tốt", "cách điện", "an toàn", "đồng", "nhựa"],
+                rubric: "• Lõi làm bằng đồng (kim loại) (0,5 điểm): Vì đồng có tính dẫn điện rất tốt, giúp truyền tải dòng điện đến các thiết bị điện.\n• Vỏ bọc làm bằng nhựa hoặc cao su (0,5 điểm): Vì nhựa và cao su có tính cách điện (không dẫn điện), có độ bền, dẻo giúp bảo vệ lõi dây và đảm bảo an toàn, tránh bị điện giật cho người sử dụng."
+            },
+            {
+                q: "Để tìm hiểu khả năng bị ăn mòn của các vật liệu, học sinh cho 3 mẫu vật liệu gồm: một chiếc đinh sắt, một mảnh nhựa và một mảnh thủy tinh vào 3 cốc đựng dung dịch giấm ăn. Sau một thời gian quan sát, dữ liệu thu thập được như sau:\nCốc 1 (chứa đinh sắt): Có sủi bọt khí trên bề mặt đinh sắt, đinh sắt bị mòn dần.\nCốc 2 (chứa mảnh nhựa): Không có hiện tượng gì xảy ra, mảnh nhựa nguyên vẹn.\nCốc 3 (chứa mảnh thủy tinh): Không có hiện tượng gì xảy ra, mảnh thủy tinh nguyên vẹn.\na) Hãy phân tích, so sánh kết quả ở 3 cốc và rút ra kết luận về khả năng bị ăn mòn của sắt, nhựa và thủy tinh trong giấm ăn.\nb) Ở gia đình, khi muốn ngâm tỏi, ớt với giấm ăn, chúng ta nên chọn hũ đựng làm bằng vật liệu nào trong các vật liệu trên để đảm bảo an toàn? Vì sao?",
+                keywords: ["sắt bị ăn mòn", "nhựa", "thủy tinh", "không bị ăn mòn", "an toàn"],
+                rubric: "• a) Kết luận (0,5 điểm): Kim loại sắt bị ăn mòn trong môi trường acid (giấm ăn), còn vật liệu nhựa và thủy tinh không bị giấm ăn ăn mòn.\n• b) Lựa chọn hũ đựng (0,5 điểm): Nên chọn hũ làm bằng thủy tinh (hoặc nhựa an toàn thực phẩm, ưu tiên thủy tinh) vì thủy tinh không bị giấm ăn ăn mòn, không sinh ra chất độc hại, đảm bảo an toàn sức khỏe."
+            },
+            {
+                q: "Một nhóm học sinh gắn các viên sáp nhỏ vào đầu của 3 thanh vật liệu có cùng kích thước (thanh nhôm, thanh thủy tinh, thanh gỗ) rồi nhúng đầu còn lại của 3 thanh vào cùng một chậu nước sôi. Nhóm học sinh thu thập được dữ liệu về thời gian để viên sáp bắt đầu nóng chảy như sau:\nThanh nhôm: Viên sáp nóng chảy sau 20 giây.\nThanh thủy tinh: Viên sáp nóng chảy sau 110 giây.\nThanh gỗ: Sau 300 giây viên sáp vẫn chưa nóng chảy.\na) Em hãy phân tích, so sánh số liệu trên và rút ra kết luận: Vật liệu nào dẫn nhiệt tốt nhất, vật liệu nào dẫn nhiệt kém nhất trong 3 vật liệu đó?\nb) Khi sản xuất xoong, nồi dùng để đun nấu, người ta nên chọn vật liệu nào làm thân nồi và vật liệu nào bọc ngoài quai nồi (tay cầm)?",
+                keywords: ["nhôm dẫn nhiệt tốt nhất", "gỗ dẫn nhiệt kém nhất", "thân nồi", "quai nồi", "bỏng"],
+                rubric: "• a) Phân tích & kết luận (0,5 điểm): Sáp trên thanh nhôm chảy nhanh nhất (20s) nên nhôm dẫn nhiệt tốt nhất; sáp trên thanh gỗ sau 300s chưa chảy nên gỗ dẫn nhiệt kém nhất.\n• b) Ứng dụng làm xoong nồi (0,5 điểm):\n  - Thân nồi nên làm bằng nhôm (kim loại) để dẫn nhiệt tốt, giúp thức ăn nhanh chín và tiết kiệm nhiên liệu.\n  - Quai nồi (tay cầm) nên bọc bằng gỗ (hoặc nhựa cách nhiệt) để dẫn nhiệt kém, giúp người nấu cầm không bị bỏng."
+            },
+            {
+                q: "a. Nêu đặc điểm của chất ở thể khí.\nb. Khi mở lọ nước hoa, một lát sau có thể ngửi thấy mùi nước hoa. Điều này thể hiện đặc điểm gì của chất ở thể khí.",
+                keywords: ["không có hình dạng", "không có thể tích xác định", "dễ bị nén", "chuyển động tự do", "lan tỏa"],
+                rubric: "• a) Đặc điểm chất ở thể khí (0,5 điểm): Các hạt ở xa nhau, lực liên kết rất yếu nên chuyển động tự do về mọi phía; không có hình dạng và thể tích xác định (chiếm toàn bộ bình chứa); dễ bị nén.\n• b) Giải thích hiện tượng mở lọ nước hoa (0,5 điểm): Thể hiện đặc điểm các hạt chất khí chuyển động tự do về mọi phía nên dễ dàng khuếch tán, lan tỏa trong không khí đến mũi ta."
+            },
+            {
+                q: "a. Nêu đặc điểm của chất ở thể lỏng.\nb. Nước từ nhà máy được dẫn đến các hộ dân qua các đường ống. Điều này thể hiện đặc điểm gì của chất ở thể lỏng.",
+                keywords: ["thể tích xác định", "không có hình dạng xác định", "chảy", "bình chứa"],
+                rubric: "• a) Đặc điểm chất ở thể lỏng (0,5 điểm): Có thể tích xác định nhưng không có hình dạng xác định (có hình dạng của phần vật chứa nó), khó bị nén.\n• b) Giải thích hiện tượng dẫn nước qua ống (0,5 điểm): Thể hiện đặc điểm chất lỏng không có hình dạng riêng xác định, có khả năng chảy và mang hình dạng của đường ống dẫn."
+            },
+            {
+                q: "Thả rơi một chiếc cốc thủy tinh, cốc sứ, cốc nhựa và cốc inox từ cùng một độ cao xuống nền gạch. Kết quả: cốc thủy tinh và cốc sứ bị vỡ; cốc nhựa và cốc inox không bị vỡ.\na) Rút ra kết luận về tính dễ vỡ của các vật liệu trên.\nb) Trẻ nhỏ nên dùng cốc làm bằng vật liệu nào? Vì sao?",
+                keywords: ["thủy tinh", "sứ dễ vỡ", "nhựa", "inox bền", "không vỡ", "an toàn"],
+                rubric: "• a) Kết luận (0,5 điểm): Thủy tinh và gốm sứ là vật liệu giòn, dễ vỡ khi va đập mạnh; nhựa và inox (kim loại) là vật liệu bền, dẻo/cứng, khó bị vỡ khi rơi.\n• b) Khuyên dùng cho trẻ nhỏ (0,5 điểm): Trẻ nhỏ nên dùng cốc làm bằng nhựa (nhựa an toàn) hoặc inox vì nhẹ, bền, khi lỡ làm rơi không bị vỡ tạo mảnh sắc nhọn gây nguy hiểm cho trẻ."
+            },
+            {
+                q: "Để một chiếc đinh sắt, một miếng nhựa, một mảnh thủy tinh ở nơi ẩm ướt trong vài tuần. Kết quả: chỉ có đinh sắt bị gỉ.\na) Rút ra kết luận về khả năng bị gỉ của các vật liệu trên.\nb) Vì sao cửa sắt, hàng rào sắt thường được sơn phủ bên ngoài?",
+                keywords: ["sắt bị gỉ", "nhựa", "thủy tinh không bị gỉ", "ngăn tiếp xúc", "không khí ẩm", "bảo vệ"],
+                rubric: "• a) Kết luận (0,5 điểm): Sắt (kim loại) dễ bị han gỉ trong không khí ẩm, còn nhựa và thủy tinh không bị gỉ.\n• b) Giải thích việc sơn cửa sắt (0,5 điểm): Sơn phủ bên ngoài giúp ngăn không cho bề mặt sắt tiếp xúc trực tiếp với oxygen và hơi nước trong không khí ẩm, từ đó chống gỉ sét và tăng độ bền đẹp cho công trình."
+            }
+        ];
+
+        /* =========================================================================
+           2. TRẠNG THÁI PHIÊN LÀM BÀI (STATE)
+           ========================================================================= */
+        let currentSession = {
+            studentName: "",
+            studentClass: "",
+            showAnswerAfterSubmit: true,
+            activePart: 1,       // 1, 2, 3, 4
+            activeIndexInPart: 0,
+            questions: {
+                1: [], // 12 câu
+                2: [], // 2 câu
+                3: [], // 4 câu
+                4: []  // 3 câu
+            },
+            answers: {
+                1: {}, // index -> optionIndex (0..3)
+                2: {}, // index -> { 0: true/false, 1: true/false, 2: true/false, 3: true/false }
+                3: {}, // index -> string
+                4: {}  // index -> string
+            },
+            submitted: false
+        };
+
+        /* =========================================================================
+           3. HÀM TIỆN ÍCH TRỘN ĐỀ NGẪU NHIÊN (ĐỔI CÂU HỎI MỖI LƯỢT MỚI)
+           ========================================================================= */
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function formatScoreVN(num) {
+            return (Math.round(num * 100) / 100).toFixed(2).replace('.', ',');
+        }
+
+        function normalizeShortAnswer(str) {
+            if (!str) return "";
+            return str.toString().trim().toLowerCase().replace(/\s+/g, " ");
+        }
+
+        /* =========================================================================
+           4. KHỞI TẠO LƯỢT ÔN TẬP MỚI
+           ========================================================================= */
+        function startQuizSession() {
+            const nameInput = document.getElementById("inputStudentName").value.trim();
+            const classInput = document.getElementById("inputStudentClass").value.trim();
+            const errorBox = document.getElementById("welcomeErrorMsg");
+
+            if (!nameInput || !classInput) {
+                errorBox.style.display = "block";
+                return;
+            }
+            errorBox.style.display = "none";
+
+            currentSession.studentName = nameInput;
+            currentSession.studentClass = classInput;
+            currentSession.showAnswerAfterSubmit = document.getElementById("toggleShowAnswerAfterSubmit").checked;
+
+            // Bốc ngẫu nhiên đúng cấu trúc: 12 câu P1, 2 câu P2, 4 câu P3, 3 câu P4
+            currentSession.questions[1] = shuffleArray(BANK_PART1).slice(0, 12);
+            currentSession.questions[2] = shuffleArray(BANK_PART2).slice(0, 2);
+            currentSession.questions[3] = shuffleArray(BANK_PART3).slice(0, 4);
+            currentSession.questions[4] = shuffleArray(BANK_PART4).slice(0, 3);
+
+            currentSession.answers = { 1: {}, 2: {}, 3: {}, 4: {} };
+            currentSession.activePart = 1;
+            currentSession.activeIndexInPart = 0;
+            currentSession.submitted = false;
+
+            // Hiển thị thông tin học sinh trên Header
+            document.getElementById("displayStudentName").textContent = currentSession.studentName;
+            document.getElementById("displayStudentClass").textContent = currentSession.studentClass;
+            document.getElementById("headerStudentInfo").style.display = "flex";
+
+            // Chuyển sang màn hình làm bài
+            showScreen("quizScreen");
+            renderCurrentQuestion();
+            updateProgressAndPalette();
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll(".screen").forEach(el => el.classList.remove("active"));
+            document.getElementById(screenId).classList.add("active");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        /* =========================================================================
+           5. HIỂN THỊ CÂU HỎI & XỬ LÝ TƯƠNG TÁC LÀM BÀI
+           ========================================================================= */
+        function switchPart(partNumber) {
+            currentSession.activePart = partNumber;
+            currentSession.activeIndexInPart = 0;
+            renderCurrentQuestion();
+            updateProgressAndPalette();
+        }
+
+        function jumpToQuestion(partNumber, indexInPart) {
+            currentSession.activePart = partNumber;
+            currentSession.activeIndexInPart = indexInPart;
+            renderCurrentQuestion();
+            updateProgressAndPalette();
+        }
+
+        function navigateQuestion(step) {
+            const p = currentSession.activePart;
+            const list = currentSession.questions[p];
+            const nextIdx = currentSession.activeIndexInPart + step;
+
+            if (nextIdx >= 0 && nextIdx < list.length) {
+                currentSession.activeIndexInPart = nextIdx;
+            } else if (step > 0 && p < 4) {
+                currentSession.activePart = p + 1;
+                currentSession.activeIndexInPart = 0;
+            } else if (step < 0 && p > 1) {
+                currentSession.activePart = p - 1;
+                currentSession.activeIndexInPart = currentSession.questions[currentSession.activePart].length - 1;
+            }
+            renderCurrentQuestion();
+            updateProgressAndPalette();
+        }
+
+        function isQuestionAnswered(part, idx) {
+            const ans = currentSession.answers[part][idx];
+            if (part === 1) {
+                return ans !== undefined && ans !== null;
+            } else if (part === 2) {
+                if (!ans) return false;
+                return ans[0] !== undefined && ans[1] !== undefined && ans[2] !== undefined && ans[3] !== undefined;
+            } else if (part === 3 || part === 4) {
+                return ans !== undefined && ans.toString().trim().length > 0;
+            }
+            return false;
+        }
+
+        function renderCurrentQuestion() {
+            const part = currentSession.activePart;
+            const idx = currentSession.activeIndexInPart;
+            const qList = currentSession.questions[part];
+            const qObj = qList[idx];
+
+            // Cập nhật tab đang chọn
+            for (let p = 1; p <= 4; p++) {
+                const tab = document.getElementById("navPart" + p);
+                if (p === part) tab.classList.add("active");
+                else tab.classList.remove("active");
+            }
+
+            // Cập nhật Header của thẻ câu hỏi
+            const headerEl = document.getElementById("questionHeader");
+            headerEl.className = "q-card-header p" + part;
+
+            const partNames = {
+                1: "PHẦN 1. TRẮC NGHIỆM NHIỀU LỰA CHỌN",
+                2: "PHẦN 2. TRẮC NGHIỆM ĐÚNG – SAI",
+                3: "PHẦN 3. TRẮC NGHIỆM TRẢ LỜI NGẮN",
+                4: "PHẦN 4. TỰ LUẬN"
+            };
+            const partPoints = {
+                1: "0,25 điểm",
+                2: "Tối đa 1,0 điểm (1 ý: 0,1đ • 2 ý: 0,25đ • 3 ý: 0,5đ • 4 ý: 1,0đ)",
+                3: "0,5 điểm",
+                4: "1,0 điểm"
+            };
+
+            document.getElementById("questionHeaderTitle").textContent = `${partNames[part]} • CÂU ${idx + 1} / ${qList.length}`;
+            document.getElementById("questionPointsBadge").textContent = partPoints[part];
+
+            // Hiển thị nội dung câu hỏi (tuyệt đối không kèm số thứ tự câu gốc trong file)
+            document.getElementById("questionPromptText").textContent = qObj.q;
+
+            const container = document.getElementById("questionInteractiveArea");
+            container.innerHTML = "";
+
+            // Render vùng tương tác theo từng phần
+            if (part === 1) {
+                const letters = ["A", "B", "C", "D"];
+                const selectedOpt = currentSession.answers[1][idx];
+                const wrap = document.createElement("div");
+                wrap.className = "mcq-options";
+
+                qObj.options.forEach((optText, optIndex) => {
+                    const btn = document.createElement("div");
+                    btn.className = "mcq-option" + (selectedOpt === optIndex ? " selected" : "");
+                    btn.onclick = () => {
+                        currentSession.answers[1][idx] = optIndex;
+                        renderCurrentQuestion();
+                        updateProgressAndPalette();
+                    };
+
+                    const letterSpan = document.createElement("div");
+                    letterSpan.className = "opt-letter";
+                    letterSpan.textContent = letters[optIndex];
+
+                    const textSpan = document.createElement("div");
+                    textSpan.className = "opt-text";
+                    textSpan.textContent = optText;
+
+                    btn.appendChild(letterSpan);
+                    btn.appendChild(textSpan);
+                    wrap.appendChild(btn);
+                });
+                container.appendChild(wrap);
+
+            } else if (part === 2) {
+                if (!currentSession.answers[2][idx]) {
+                    currentSession.answers[2][idx] = {};
+                }
+                const currentTF = currentSession.answers[2][idx];
+                const wrap = document.createElement("div");
+                wrap.className = "tf-list";
+
+                qObj.items.forEach((subItem, subIdx) => {
+                    const row = document.createElement("div");
+                    row.className = "tf-item";
+
+                    const st = document.createElement("div");
+                    st.className = "tf-statement";
+                    st.textContent = `${subItem.label}) ${subItem.text}`;
+
+                    const btnGroup = document.createElement("div");
+                    btnGroup.className = "tf-buttons";
+
+                    const btnTrue = document.createElement("button");
+                    btnTrue.type = "button";
+                    btnTrue.className = "tf-btn true-btn" + (currentTF[subIdx] === true ? " selected" : "");
+                    btnTrue.innerHTML = "✔ Đúng";
+                    btnTrue.onclick = () => {
+                        currentSession.answers[2][idx][subIdx] = true;
+                        renderCurrentQuestion();
+                        updateProgressAndPalette();
+                    };
+
+                    const btnFalse = document.createElement("button");
+                    btnFalse.type = "button";
+                    btnFalse.className = "tf-btn false-btn" + (currentTF[subIdx] === false ? " selected" : "");
+                    btnFalse.innerHTML = "✘ Sai";
+                    btnFalse.onclick = () => {
+                        currentSession.answers[2][idx][subIdx] = false;
+                        renderCurrentQuestion();
+                        updateProgressAndPalette();
+                    };
+
+                    btnGroup.appendChild(btnTrue);
+                    btnGroup.appendChild(btnFalse);
+                    row.appendChild(st);
+                    row.appendChild(btnGroup);
+                    wrap.appendChild(row);
+                });
+                container.appendChild(wrap);
+
+            } else if (part === 3) {
+                const currentVal = currentSession.answers[3][idx] || "";
+                const box = document.createElement("div");
+                box.className = "sa-box";
+                box.innerHTML = `
+                    <label style="font-weight: 700; font-size: 0.95rem; color: #92400e;">
+                        ✏️ Nhập kết quả của em (Có thể dùng dấu phẩy hoặc dấu chấm thập phân):
+                    </label>
+                    <div class="sa-input-row">
+                        <input type="text" id="shortAnswerInput" class="sa-input" placeholder="Nhập số hoặc câu trả lời..." value="${currentVal.replace(/"/g, '&quot;')}" autocomplete="off">
+                        <span class="sa-unit-badge">Đơn vị: ${qObj.unit}</span>
+                    </div>
+                `;
+                container.appendChild(box);
+
+                const inputEl = box.querySelector("#shortAnswerInput");
+                inputEl.addEventListener("input", (e) => {
+                    currentSession.answers[3][idx] = e.target.value;
+                    updateProgressAndPalette();
+                });
+
+            } else if (part === 4) {
+                const currentEssay = currentSession.answers[4][idx] || "";
+                const box = document.createElement("div");
+                box.className = "essay-box";
+                box.innerHTML = `
+                    <label style="display: block; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--part4-color);">
+                        📝 Trình bày bài làm tự luận của em vào khung dưới đây:
+                    </label>
+                    <textarea id="essayAnswerInput" placeholder="Nhập câu trả lời chi tiết cho từng ý a, b...">${currentEssay}</textarea>
+                `;
+                container.appendChild(box);
+
+                const areaEl = box.querySelector("#essayAnswerInput");
+                areaEl.addEventListener("input", (e) => {
+                    currentSession.answers[4][idx] = e.target.value;
+                    updateProgressAndPalette();
+                });
+            }
+
+            // Cập nhật trạng thái nút Câu trước / Câu tiếp theo
+            const isFirst = (part === 1 && idx === 0);
+            const isLast = (part === 4 && idx === qList.length - 1);
+            document.getElementById("btnPrevQuestion").disabled = isFirst;
+            document.getElementById("btnPrevQuestion").style.opacity = isFirst ? "0.45" : "1";
+            document.getElementById("btnNextQuestion").textContent = isLast ? "ĐẾN CUỐI BÀI" : "CÂU TIẾP THEO →";
+            document.getElementById("btnNextQuestion").disabled = isLast;
+            document.getElementById("btnNextQuestion").style.opacity = isLast ? "0.45" : "1";
+        }
+
+        /* =========================================================================
+           6. CẬP NHẬT THANH TIẾN TRÌNH & BẢNG MÀU CÂU HỎI
+           ========================================================================= */
+        function updateProgressAndPalette() {
+            let totalQuestions = 0;
+            let totalAnswered = 0;
+
+            const partCounts = { 1: 0, 2: 0, 3: 0, 4: 0 };
+
+            for (let p = 1; p <= 4; p++) {
+                const len = currentSession.questions[p].length;
+                totalQuestions += len;
+                for (let i = 0; i < len; i++) {
+                    if (isQuestionAnswered(p, i)) {
+                        partCounts[p]++;
+                        totalAnswered++;
+                    }
+                }
+            }
+
+            // Cập nhật số lượng trên 4 tab
+            document.getElementById("countPart1").textContent = `Đã làm: ${partCounts[1]}/12 câu`;
+            document.getElementById("countPart2").textContent = `Đã làm: ${partCounts[2]}/2 câu`;
+            document.getElementById("countPart3").textContent = `Đã làm: ${partCounts[3]}/4 câu`;
+            document.getElementById("countPart4").textContent = `Đã làm: ${partCounts[4]}/3 câu`;
+
+            // Cập nhật thanh tiến trình tổng
+            const percent = Math.round((totalAnswered / totalQuestions) * 100);
+            document.getElementById("progressText").textContent = `Tiến độ hoàn thành: ${totalAnswered} / ${totalQuestions} câu (${percent}%)`;
+            document.getElementById("progressBarFill").style.width = `${percent}%`;
+            document.getElementById("paletteTotalBadge").textContent = `${totalAnswered}/${totalQuestions}`;
+
+            // Cập nhật dòng trạng thái câu đang mở
+            const currentDone = isQuestionAnswered(currentSession.activePart, currentSession.activeIndexInPart);
+            const hintEl = document.getElementById("questionStatusHint");
+            if (currentDone) {
+                hintEl.textContent = "✔ Đã trả lời";
+                hintEl.style.color = "var(--success)";
+            } else {
+                hintEl.textContent = "○ Chưa hoàn thành câu này";
+                hintEl.style.color = "var(--text-muted)";
+            }
+
+            // Vẽ lại bảng chọn nhanh câu hỏi bên phải
+            const palContainer = document.getElementById("paletteContainer");
+            palContainer.innerHTML = "";
+
+            const labels = {
+                1: "Phần 1. Nhiều lựa chọn (12)",
+                2: "Phần 2. Đúng - Sai (2)",
+                3: "Phần 3. Trả lời ngắn (4)",
+                4: "Phần 4. Tự luận (3)"
+            };
+
+            for (let p = 1; p <= 4; p++) {
+                const secTitle = document.createElement("div");
+                secTitle.className = "palette-section-label";
+                secTitle.textContent = labels[p];
+                palContainer.appendChild(secTitle);
+
+                const grid = document.createElement("div");
+                grid.className = "palette-grid";
+
+                const len = currentSession.questions[p].length;
+                for (let i = 0; i < len; i++) {
+                    const btn = document.createElement("button");
+                    btn.type = "button";
+                    btn.className = "pal-btn";
+                    if (isQuestionAnswered(p, i)) btn.classList.add("answered");
+                    if (currentSession.activePart === p && currentSession.activeIndexInPart === i) {
+                        btn.classList.add("current");
+                    }
+                    btn.textContent = i + 1;
+                    btn.onclick = () => jumpToQuestion(p, i);
+                    grid.appendChild(btn);
+                }
+                palContainer.appendChild(grid);
+            }
+        }
+
+        /* =========================================================================
+           7. XÁC NHẬN NỘP BÀI & CHẤM ĐIỂM TỰ ĐỘNG CHUẨN THANG ĐIỂM 10
+           ========================================================================= */
+        function openSubmitConfirmation() {
+            let unanswered = 0;
+            const details = [];
+
+            for (let p = 1; p <= 4; p++) {
+                let missingInPart = 0;
+                const len = currentSession.questions[p].length;
+                for (let i = 0; i < len; i++) {
+                    if (!isQuestionAnswered(p, i)) {
+                        unanswered++;
+                        missingInPart++;
+                    }
+                }
+                if (missingInPart > 0) {
+                    details.push(`Phần ${p} còn ${missingInPart} câu`);
+                }
+            }
+
+            const msgEl = document.getElementById("submitModalMessage");
+            const warnEl = document.getElementById("submitUnansweredWarning");
+
+            msgEl.textContent = `Em có chắc chắn muốn nộp bài ôn tập ngay bây giờ không?`;
+
+            if (unanswered > 0) {
+                warnEl.style.display = "block";
+                warnEl.innerHTML = `⚠️ Cảnh báo: Em còn <strong>${unanswered} câu chưa hoàn thành</strong> (${details.join(", ")}). Em vẫn có thể quay lại làm tiếp trước khi nộp!`;
+            } else {
+                warnEl.style.display = "none";
+            }
+
+            document.getElementById("submitModal").classList.add("active");
+        }
+
+        function closeSubmitModal() {
+            document.getElementById("submitModal").classList.remove("active");
+        }
+
+        function checkShortAnswerCorrect(userRaw, qObj) {
+            if (!userRaw || !userRaw.trim()) return false;
+            const cleaned = normalizeShortAnswer(userRaw);
+
+            // Kiểm tra khớp trực tiếp danh sách đáp án tương đương
+            if (qObj.accepted.includes(cleaned)) return true;
+
+            // So sánh giá trị số nếu học sinh chỉ nhập số (ví dụ 154,60 vs 154,6)
+            const numUser = parseFloat(cleaned.replace(',', '.'));
+            const numStd = parseFloat(qObj.accepted[0].replace(',', '.'));
+            if (!isNaN(numUser) && !isNaN(numStd)) {
+                const onlyNumberWithOptionalUnit = cleaned.replace(/[0-9.,\-\s]/g, "");
+                // Nếu không có ký tự lạ hoặc ký tự đơn vị hợp lệ
+                if (Math.abs(numUser - numStd) < 1e-6 && onlyNumberWithOptionalUnit.length <= 8) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function evaluateEssayAnswer(userText, qObj) {
+            if (!userText || userText.trim().length < 5) {
+                return { points: 0, matchedCount: 0, totalKeywords: qObj.keywords.length };
+            }
+            const lower = userText.toLowerCase();
+            let matched = 0;
+            qObj.keywords.forEach(kw => {
+                if (lower.includes(kw.toLowerCase())) {
+                    matched++;
+                }
+            });
+
+            const ratio = matched / qObj.keywords.length;
+            let pts = 0;
+            if (ratio >= 0.75) pts = 1.0;
+            else if (ratio >= 0.5) pts = 0.75;
+            else if (ratio >= 0.25) pts = 0.5;
+            else if (userText.trim().length >= 20) pts = 0.25;
+
+            return { points: pts, matchedCount: matched, totalKeywords: qObj.keywords.length };
+        }
+
+        function confirmAndGradeQuiz() {
+            closeSubmitModal();
+            currentSession.submitted = true;
+
+            let scoreP1 = 0; // Tối đa 3,0đ (12 câu x 0,25đ)
+            let scoreP2 = 0; // Tối đa 2,0đ (2 câu x 1,0đ)
+            let scoreP3 = 0; // Tối đa 2,0đ (4 câu x 0,5đ)
+            let scoreP4 = 0; // Tối đa 3,0đ (3 câu x 1,0đ)
+
+            let countCorrect = 0;
+            let countPartial = 0;
+            let countWrong = 0;
+            let countUnanswered = 0;
+
+            const reviewItemsHTML = [];
+            const letters = ["A", "B", "C", "D"];
+
+            // 1. CHẤM PHẦN 1 (12 câu x 0,25 điểm)
+            currentSession.questions[1].forEach((qObj, idx) => {
+                const userChoice = currentSession.answers[1][idx];
+                const isAns = (userChoice !== undefined && userChoice !== null);
+                const isRight = (userChoice === qObj.ans);
+
+                if (!isAns) countUnanswered++;
+                else if (isRight) {
+                    scoreP1 += 0.25;
+                    countCorrect++;
+                } else {
+                    countWrong++;
+                }
+
+                const statusClass = isRight ? "correct" : "wrong";
+                const statusLabel = !isAns ? "Chưa trả lời (0 đ)" : (isRight ? "✔ Chính xác (+0,25 đ)" : "✘ Sai (0 đ)");
+
+                reviewItemsHTML.push(`
+                    <div class="review-item ${statusClass}">
+                        <div class="review-header">
+                            <strong>PHẦN 1 • Câu ${idx + 1}</strong>
+                            <span class="status-pill ${statusClass}">${statusLabel}</span>
+                        </div>
+                        <div style="font-weight: 700; margin-bottom: 0.6rem;">${qObj.q}</div>
+                        <div style="font-size: 0.95rem;">
+                            <div>• Lựa chọn của em: <strong>${isAns ? letters[userChoice] + ". " + qObj.options[userChoice] : "Chưa chọn đáp án"}</strong></div>
+                            <div style="color: var(--success); margin-top: 0.25rem;">• Đáp án đúng: <strong>${letters[qObj.ans]}. ${qObj.options[qObj.ans]}</strong></div>
+                        </div>
+                        <div class="explanation-box">
+                            <strong>💡 Giải thích kiến thức:</strong> ${qObj.exp}
+                        </div>
+                    </div>
+                `);
+            });
+
+            // 2. CHẤM PHẦN 2 (2 câu Đúng/Sai: 1 ý = 0,1đ; 2 ý = 0,25đ; 3 ý = 0,5đ; 4 ý = 1,0đ)
+            const tfScoreMap = { 0: 0, 1: 0.1, 2: 0.25, 3: 0.5, 4: 1.0 };
+
+            currentSession.questions[2].forEach((qObj, idx) => {
+                const userTF = currentSession.answers[2][idx] || {};
+                let rightSubCount = 0;
+                let answeredSubCount = 0;
+
+                const subLines = qObj.items.map((item, sIdx) => {
+                    const uVal = userTF[sIdx];
+                    if (uVal !== undefined) answeredSubCount++;
+                    const isSubRight = (uVal === item.ans);
+                    if (isSubRight) rightSubCount++;
+
+                    const uText = uVal === undefined ? "Chưa chọn" : (uVal ? "Đúng" : "Sai");
+                    const stdText = item.ans ? "Đúng" : "Sai";
+                    const color = isSubRight ? "var(--success)" : "var(--danger)";
+
+                    return `<div style="margin-top: 0.35rem; padding: 0.4rem 0.6rem; background: #f8fafc; border-radius: 6px;">
+                        <strong>${item.label})</strong> ${item.text}<br>
+                        <span style="color: ${color}; font-weight: 700;">→ Em chọn: ${uText} | Đáp án chuẩn: ${stdText}</span>
+                    </div>`;
+                }).join("");
+
+                const pts = tfScoreMap[rightSubCount];
+                scoreP2 += pts;
+
+                if (answeredSubCount === 0) countUnanswered++;
+                else if (rightSubCount === 4) countCorrect++;
+                else if (rightSubCount > 0) countPartial++;
+                else countWrong++;
+
+                const statusClass = rightSubCount === 4 ? "correct" : (rightSubCount > 0 ? "partial" : "wrong");
+                const statusLabel = `Đúng ${rightSubCount}/4 ý (+${formatScoreVN(pts)} đ)`;
+
+                reviewItemsHTML.push(`
+                    <div class="review-item ${statusClass}">
+                        <div class="review-header">
+                            <strong>PHẦN 2 • Câu ${idx + 1} (Đúng - Sai)</strong>
+                            <span class="status-pill ${statusClass}">${statusLabel}</span>
+                        </div>
+                        <div style="font-weight: 700; margin-bottom: 0.6rem;">${qObj.q}</div>
+                        <div style="font-size: 0.94rem;">${subLines}</div>
+                        <div class="explanation-box">
+                            <strong>💡 Giải thích kiến thức:</strong> ${qObj.exp}
+                        </div>
+                    </div>
+                `);
+            });
+
+            // 3. CHẤM PHẦN 3 (4 câu Trả lời ngắn x 0,5 điểm)
+            currentSession.questions[3].forEach((qObj, idx) => {
+                const userRaw = currentSession.answers[3][idx] || "";
+                const isAns = userRaw.trim().length > 0;
+                const isRight = checkShortAnswerCorrect(userRaw, qObj);
+
+                if (!isAns) countUnanswered++;
+                else if (isRight) {
+                    scoreP3 += 0.5;
+                    countCorrect++;
+                } else {
+                    countWrong++;
+                }
+
+                const statusClass = isRight ? "correct" : "wrong";
+                const statusLabel = !isAns ? "Chưa trả lời (0 đ)" : (isRight ? "✔ Chính xác (+0,50 đ)" : "✘ Sai (0 đ)");
+
+                reviewItemsHTML.push(`
+                    <div class="review-item ${statusClass}">
+                        <div class="review-header">
+                            <strong>PHẦN 3 • Câu ${idx + 1} (Trả lời ngắn)</strong>
+                            <span class="status-pill ${statusClass}">${statusLabel}</span>
+                        </div>
+                        <div style="font-weight: 700; margin-bottom: 0.6rem;">${qObj.q}</div>
+                        <div style="font-size: 0.95rem;">
+                            <div>• Câu trả lời của em: <strong>${isAns ? userRaw : "Chưa nhập câu trả lời"}</strong></div>
+                            <div style="color: var(--success); margin-top: 0.25rem;">• Đáp án chuẩn: <strong>${qObj.displayAns}</strong></div>
+                        </div>
+                        <div class="explanation-box">
+                            <strong>💡 Hướng dẫn giải:</strong> ${qObj.exp}
+                        </div>
+                    </div>
+                `);
+            });
+
+            // 4. CHẤM PHẦN 4 (3 câu Tự luận x 1,0 điểm + Hướng dẫn tự đối chiếu)
+            currentSession.questions[4].forEach((qObj, idx) => {
+                const userEssay = currentSession.answers[4][idx] || "";
+                const isAns = userEssay.trim().length > 0;
+                const evalRes = evaluateEssayAnswer(userEssay, qObj);
+
+                scoreP4 += evalRes.points;
+
+                if (!isAns) countUnanswered++;
+                else if (evalRes.points === 1.0) countCorrect++;
+                else if (evalRes.points > 0) countPartial++;
+                else countWrong++;
+
+                const statusClass = evalRes.points === 1.0 ? "correct" : (evalRes.points > 0 ? "partial" : "wrong");
+                const statusLabel = !isAns ? "Chưa làm (0 đ)" : `Điểm tự luận: +${formatScoreVN(evalRes.points)} / 1,00 đ`;
+
+                reviewItemsHTML.push(`
+                    <div class="review-item ${statusClass}">
+                        <div class="review-header">
+                            <strong>PHẦN 4 • Câu ${idx + 1} (Tự luận)</strong>
+                            <span class="status-pill ${statusClass}">${statusLabel}</span>
+                        </div>
+                        <div style="font-weight: 700; margin-bottom: 0.6rem; white-space: pre-line;">${qObj.q}</div>
+                        <div style="background: #f8fafc; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 0.65rem;">
+                            <strong>Bài làm của em:</strong><br>
+                            <span style="white-space: pre-line;">${isAns ? userEssay : "Em chưa nhập câu trả lời cho câu tự luận này."}</span>
+                        </div>
+                        <div class="explanation-box" style="background: #ecfdf5; border-left-color: var(--part4-color);">
+                            <strong>✅ Đáp án tham khảo & Hướng dẫn chấm (Học sinh tự đối chiếu các ý chính):</strong><br>
+                            <div style="white-space: pre-line; margin-top: 0.35rem;">${qObj.rubric}</div>
+                        </div>
+                    </div>
+                `);
+            });
+
+            const totalScore = scoreP1 + scoreP2 + scoreP3 + scoreP4;
+
+            // Hiển thị lên màn hình Kết quả
+            document.getElementById("resultStudentInfo").textContent = `Học sinh: ${currentSession.studentName} • Lớp: ${currentSession.studentClass}`;
+            document.getElementById("finalTotalScore").textContent = formatScoreVN(totalScore);
+            document.getElementById("scorePart1").textContent = `${formatScoreVN(scoreP1)} / 3,00 đ`;
+            document.getElementById("scorePart2").textContent = `${formatScoreVN(scoreP2)} / 2,00 đ`;
+            document.getElementById("scorePart3").textContent = `${formatScoreVN(scoreP3)} / 2,00 đ`;
+            document.getElementById("scorePart4").textContent = `${formatScoreVN(scoreP4)} / 3,00 đ`;
+
+            document.getElementById("statCorrectCount").textContent = countCorrect;
+            document.getElementById("statPartialCount").textContent = countPartial;
+            document.getElementById("statWrongCount").textContent = countWrong;
+            document.getElementById("statUnansweredCount").textContent = countUnanswered;
+
+            // Nhận xét khích lệ học sinh
+            const msgBox = document.getElementById("encouragementText");
+            if (totalScore >= 9.0) {
+                msgBox.textContent = "🌟 Xuất sắc! Em nắm vững kiến thức Khoa học tự nhiên 6 rất tuyệt vời!";
+            } else if (totalScore >= 7.5) {
+                msgBox.textContent = "👏 Rất đáng khen! Em nắm bài khá chắc, chỉ cần lưu ý thêm vài chi tiết nhỏ!";
+            } else if (totalScore >= 5.0) {
+                msgBox.textContent = "💪 Cố gắng lên em nhé! Hãy xem kĩ phần giải thích câu sai để đạt điểm cao hơn!";
+            } else {
+                msgBox.textContent = "🌱 Đừng nản lòng! Hãy đọc kĩ hướng dẫn giải bên dưới và bấm Làm lại bài để ôn tập thêm nhé!";
+            }
+
+            // Đổ danh sách câu giải thích
+            document.getElementById("reviewListContainer").innerHTML = reviewItemsHTML.join("");
+
+            const reviewWrapper = document.getElementById("detailedReviewWrapper");
+            reviewWrapper.style.display = currentSession.showAnswerAfterSubmit ? "block" : "none";
+
+            // Lưu vào lịch sử dành cho Giáo viên kiểm tra (Ẩn với học sinh)
+            saveAttemptForTeacher({
+                name: currentSession.studentName,
+                className: currentSession.studentClass,
+                p1: formatScoreVN(scoreP1),
+                p2: formatScoreVN(scoreP2),
+                p3: formatScoreVN(scoreP3),
+                p4: formatScoreVN(scoreP4),
+                total: formatScoreVN(totalScore),
+                time: new Date().toLocaleString("vi-VN")
+            });
+
+            showScreen("resultScreen");
+        }
+
+        function toggleReviewVisibility() {
+            const wrapper = document.getElementById("detailedReviewWrapper");
+            if (wrapper.style.display === "none") {
+                wrapper.style.display = "block";
+            } else {
+                wrapper.style.display = "none";
+            }
+        }
+
+        function restartNewQuiz() {
+            // Tạo lượt chơi mới và tự động trộn bộ câu hỏi mới từ ngân hàng 98 câu
+            startQuizSession();
+        }
+
+        /* =========================================================================
+           8. TÍNH NĂNG DÀNH RIÊNG CHO GIÁO VIÊN (LƯU & TRA CỨU HỌC SINH THAM GIA)
+           (Không hiển thị số lượng người tham gia trên màn hình của học sinh)
+           ========================================================================= */
+        const TEACHER_STORAGE_KEY = "KHTN6_GIUA_KI_1_TEACHER_LOGS";
+
+        function saveAttemptForTeacher(record) {
+            try {
+                const raw = localStorage.getItem(TEACHER_STORAGE_KEY);
+                const list = raw ? JSON.parse(raw) : [];
+                list.push(record);
+                localStorage.setItem(TEACHER_STORAGE_KEY, JSON.stringify(list));
+            } catch (e) {
+                // Trình duyệt chặn localStorage ở chế độ riêng tư vẫn hoạt động bình thường
+            }
+        }
+
+        function openTeacherModal() {
+            document.getElementById("teacherPassInput").value = "";
+            document.getElementById("teacherPassError").style.display = "none";
+            document.getElementById("teacherPasswordGate").style.display = "block";
+            document.getElementById("teacherDataContent").style.display = "none";
+            document.getElementById("teacherModal").classList.add("active");
+        }
+
+        function closeTeacherModal() {
+            document.getElementById("teacherModal").classList.remove("active");
+        }
+
+        function unlockTeacherPanel() {
+            const pass = document.getElementById("teacherPassInput").value.trim().toLowerCase();
+            if (pass === "khtn6" || pass === "gv") {
+                document.getElementById("teacherPasswordGate").style.display = "none";
+                document.getElementById("teacherDataContent").style.display = "block";
+                renderTeacherTable();
+            } else {
+                document.getElementById("teacherPassError").style.display = "block";
+            }
+        }
+
+        function renderTeacherTable() {
+            const tbody = document.getElementById("teacherHistoryTableBody");
+            tbody.innerHTML = "";
+            let list = [];
+            try {
+                const raw = localStorage.getItem(TEACHER_STORAGE_KEY);
+                list = raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                list = [];
+            }
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Chưa có dữ liệu học sinh nộp bài trên thiết bị này.</td></tr>`;
+                return;
+            }
+
+            list.forEach((item, idx) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${idx + 1}</td>
+                    <td><strong>${item.name}</strong></td>
+                    <td>${item.className}</td>
+                    <td>${item.p1}</td>
+                    <td>${item.p2}</td>
+                    <td>${item.p3}</td>
+                    <td>${item.p4}</td>
+                    <td><strong style="color: var(--primary-dark);">${item.total}</strong></td>
+                    <td>${item.time}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function clearTeacherHistory() {
+            try {
+                localStorage.removeItem(TEACHER_STORAGE_KEY);
+            } catch (e) {}
+            renderTeacherTable();
+        }
+
+        function exportTeacherCSV() {
+            let list = [];
+            try {
+                const raw = localStorage.getItem(TEACHER_STORAGE_KEY);
+                list = raw ? JSON.parse(raw) : [];
+            } catch (e) {}
+
+            if (list.length === 0) return;
+
+            let csv = "\uFEFFSTT,Ho va ten,Lop,Diem P1,Diem P2,Diem P3,Diem P4,Tong diem,Thoi gian nop\n";
+            list.forEach((r, i) => {
+                csv += `${i + 1},"${r.name}","${r.className}","${r.p1}","${r.p2}","${r.p3}","${r.p4}","${r.total}","${r.time}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "Ket_qua_on_tap_KHTN6_Giua_ki_1.csv";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
